@@ -37,7 +37,7 @@ public class Register extends AppCompatActivity {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if( ed3.getText().toString().compareTo(ed2.getText().toString()) == 0) {
+                if( (ed3.getText().toString().compareTo(ed2.getText().toString()) == 0) && (ed1.getText().toString() == "")) {
                     createAccount(ed1.getText().toString(),ed2.getText().toString());
                 }else {
                     ed3.setError("Passwords Don't Match");

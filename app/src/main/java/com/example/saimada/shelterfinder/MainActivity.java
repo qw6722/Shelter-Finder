@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -81,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                     updateUI(user);
                 } else {
                     // If sign in fails, display a message to the user.
-                    Toast.makeText(MainActivity.this, "Authentication failed.",
+                    Toast.makeText(MainActivity.this, "Authentication failed. Password/Username may be incorrect.",
                             Toast.LENGTH_SHORT).show();
                 }
             }
