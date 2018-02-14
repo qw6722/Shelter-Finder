@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "291949242486",
+    "firebase_url": "https://shelterfinder-6d316.firebaseio.com",
+    "project_id": "shelterfinder-6d316",
+    "storage_bucket": "shelterfinder-6d316.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:291949242486:android:16f159dbbc196f4f",
+        "android_client_info": {
+          "package_name": "com.example.saimada.shelterfinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "291949242486-jj9hootu8pb4cq5ikaclscvebd9ri1l4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.saimada.shelterfinder",
+            "certificate_hash": "cfee20fb80cf04b28ebd466dc996ea80ad2b755c"
+          }
+        },
+        {
+          "client_id": "291949242486-7q58kjmagbcl0qmscgae6m041ifh07u5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCubMqfNwaE2wxANMer14Tl3Hc65cqr_m8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "291949242486-7q58kjmagbcl0qmscgae6m041ifh07u5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
