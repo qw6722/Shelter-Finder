@@ -19,6 +19,7 @@ public class Opening extends AppCompatActivity {
         register = findViewById(R.id.register);
 
 
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -32,5 +33,7 @@ public class Opening extends AppCompatActivity {
                 startActivity(new Intent(Opening.this, Register.class));
             }
         });
+
+
     }
 }
