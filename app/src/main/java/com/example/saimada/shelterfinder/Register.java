@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -18,6 +19,7 @@ public class Register extends AppCompatActivity {
     Button b1;
     private FirebaseAuth mAuth;
     Toolbar toolbar;
+    Spinner userType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,12 +35,14 @@ public class Register extends AppCompatActivity {
         ed1 = (EditText)findViewById(R.id.editText);
         ed2 = (EditText)findViewById(R.id.editText2);
         ed3 = (EditText)findViewById(R.id.editText3);
+        userType = (Spinner)findViewById(R.id.spinner2);
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if( (ed3.getText().toString().compareTo(ed2.getText().toString()) == 0) && (ed1.getText().toString() == "")) {
+                if( (ed3.getText().toString().compareTo(ed2.getText().toString()) == 0) && !(ed1.getText().toString() == "")) {
                     createAccount(ed1.getText().toString(),ed2.getText().toString());
+
                 }else {
                     ed3.setError("Passwords Don't Match");
                     //refresh editText fields
