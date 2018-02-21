@@ -16,8 +16,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class Register extends AppCompatActivity {
 
-    EditText ed1,ed2, ed3;
+    EditText ed1,ed2, ed3, ed4;
     Button b1;
+    String adminpassword = "@dMin";
     private FirebaseAuth mAuth;
     private DatabaseReference dbRef;
 
@@ -38,10 +39,17 @@ public class Register extends AppCompatActivity {
         ed1 = (EditText)findViewById(R.id.editText);
         ed2 = (EditText)findViewById(R.id.editText2);
         ed3 = (EditText)findViewById(R.id.editText3);
+        ed4 = (EditText) findViewById(R.id.editText4);
+        ed4.setEnabled(false);
         userType = (Switch)findViewById(R.id.switch1);
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         dbRef = mFirebaseDatabase.getReference();
-
+        userType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ed4.setEnabled(userType.isChecked());
+            }
+        });
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,8 +57,20 @@ public class Register extends AppCompatActivity {
                     createAccount(ed1.getText().toString(),ed2.getText().toString());
                     FirebaseUser user = mAuth.getCurrentUser();
                     String userID = user.getUid();
-                    User userAdding = new User(ed1.getText().toString(), ed2.getText().toString(), userType.isChecked());
-                    dbRef.child("users").child(userID).setValue(user);
+                    if (userType.isChecked()) {
+                        if (ed4.getText().toString().equals(adminpassword)) {
+                            User userAdding = new User(ed1.getText().toString(), ed2.getText().toString(), true);
+                            dbRef.child("users").child(userID).setValue(userAdding);
+                        }
+                        else {
+                            ed4.setError("Admin Password Not Equal");
+                        }
+                    }
+                    else {
+                        User userAdding = new User(ed1.getText().toString(), ed2.getText().toString(), false);
+                        dbRef.child("users").child(userID).setValue(userAdding);
+
+                    }
 
 
                 }else {
