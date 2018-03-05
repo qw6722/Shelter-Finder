@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -60,6 +61,15 @@ public class LoginPage extends AppCompatActivity {
         ageSpinner = (Spinner) findViewById((R.id.Age));
 
         filter = (Button) findViewById(R.id.Filter);
+        clear = (Button) findViewById(R.id.Clear);
+
+        filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                _gender = genderSpinner.getSelectedItem().toString();
+                _age = ageSpinner.getSelectedItem().toString();
+            }
+        });
 
 
         ArrayAdapter<String> adapterGenderSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item ,User.possibleGender);
