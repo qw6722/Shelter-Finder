@@ -1,7 +1,7 @@
 package com.example.saimada.shelterfinder;
 
 /**
- * Created by rohit on 2/28/2018.
+ * Created by rohit on 2/28/2018. Edited by Vadini and Arnab.
  */
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

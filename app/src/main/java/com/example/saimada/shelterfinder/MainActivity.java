@@ -21,11 +21,16 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * Created by Rohit and Sai
+ *
+ * Login and authentication
+ */
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Thing" ;
-    EditText ed1,ed2;
-    Button b1;
-    private FirebaseAuth mAuth;
+    EditText ed1,ed2; //user and password text boxes
+    Button b1; //submit button for authentication
+    private FirebaseAuth mAuth; //Firebase connection
     Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,13 +70,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Creates intent and starts the activity of that event 
+     *
+     * @param currentUser is the user of Firebase
+     */
     private void updateUI(FirebaseUser currentUser) {
         Intent toLogin = new Intent(MainActivity.this, LoginPage.class);
         startActivity(toLogin);
     }
 
 
-
+    /**
+     * Authenticates the information entered for login
+     *
+     * @param email is the email address entered
+     * @param password is the password for the account
+     */
     private void signIn(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
