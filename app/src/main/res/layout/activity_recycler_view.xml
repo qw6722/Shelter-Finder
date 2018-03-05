@@ -19,10 +19,20 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recycle"
-        android:layout_below="@+id/my_toolbar"></android.support.v7.widget.RecyclerView>
+        android:layout_below="@+id/my_toolbar"
+        android:layout_marginTop="56dp"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
+        tools:layout_editor_absoluteX="0dp"></android.support.v7.widget.RecyclerView>
+
+    <SearchView
+        android:layout_width="19dp"
+        android:layout_height="19dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="29dp" />
 
     <!--<ListView-->
         <!--android:id="@+id/ListView"-->
