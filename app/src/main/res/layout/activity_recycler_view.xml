@@ -34,6 +34,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:layout_editor_absoluteY="29dp" />
 
+    <SearchView
+        android:id="@+id/searchView2"
+        android:layout_width="344dp"
+        android:layout_height="44dp"
+        tools:layout_editor_absoluteX="20dp"
+        tools:layout_editor_absoluteY="56dp" />
+
     <!--<ListView-->
         <!--android:id="@+id/ListView"-->
         <!--android:layout_width="368dp"-->
