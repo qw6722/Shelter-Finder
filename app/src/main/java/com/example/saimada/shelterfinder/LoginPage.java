@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -44,10 +45,12 @@ public class LoginPage extends AppCompatActivity {
     private Spinner ageSpinner;
     private Button filter;
     private Button clear;
+    private TextView search;
 
     //Keeping track of Spinner changes
     private String _gender = "NA";
     private String _age = "Anyone";
+    private String _search = "";
 
 
     @Override
@@ -62,15 +65,28 @@ public class LoginPage extends AppCompatActivity {
 
         filter = (Button) findViewById(R.id.Filter);
         clear = (Button) findViewById(R.id.Clear);
+        search = (TextView) findViewById(R.id.searchCriteria);
 
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 _gender = genderSpinner.getSelectedItem().toString();
                 _age = ageSpinner.getSelectedItem().toString();
+                _search  = search.getText().toString();
             }
         });
 
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                _gender = "NA";
+                _age = "Anyone";
+                _search = "";
+                genderSpinner.setSelection(0);
+                ageSpinner.setSelection(0);
+                search.setText("");
+            }
+        });
 
         ArrayAdapter<String> adapterGenderSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item ,User.possibleGender);
         adapterGenderSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
