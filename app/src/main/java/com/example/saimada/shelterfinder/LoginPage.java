@@ -14,6 +14,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,12 +34,15 @@ public class LoginPage extends AppCompatActivity {
     Toolbar toolbar = null;
     RecyclerView recyclerView = null;
     List<Shelter> list = new ArrayList<>();
+
     private DatabaseReference ref;
     RecyclerView.Adapter adapter;
     SwipeController swipeController;
     //Used for binding and getting information
     private Spinner genderSpinner;
     private Spinner ageSpinner;
+    private Button filter;
+    private Button clear;
 
     //Keeping track of Spinner changes
     private String _gender = "NA";
@@ -54,6 +58,9 @@ public class LoginPage extends AppCompatActivity {
 
         genderSpinner = (Spinner) findViewById(R.id.Gender);
         ageSpinner = (Spinner) findViewById((R.id.Age));
+
+        filter = (Button) findViewById(R.id.Filter);
+
 
         ArrayAdapter<String> adapterGenderSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item ,User.possibleGender);
         adapterGenderSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
