@@ -19,13 +19,6 @@ public class ShelterRecyclerAdapter extends RecyclerView.Adapter<ShelterRecycler
 
     List<Shelter> list;
     Context context;
-    //Used for binding and getting information
-    private Spinner genderSpinner;
-    private Spinner ageSpinner;
-
-    //Keeping track of Spinner changes
-    private String _gender = "NA";
-    private String _age = "Anyone";
 
     public ShelterRecyclerAdapter(List<Shelter> list, Context context) {
         this.list = list;
@@ -56,6 +49,8 @@ public class ShelterRecyclerAdapter extends RecyclerView.Adapter<ShelterRecycler
 
     }
 
+
+
     class MyHoder extends RecyclerView.ViewHolder{
         TextView name,address,capacity;
 
@@ -67,6 +62,7 @@ public class ShelterRecyclerAdapter extends RecyclerView.Adapter<ShelterRecycler
             capacity= (TextView) itemView.findViewById(R.id.vcapacity);
 
         }
+
     }
 
 }

@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Creates intent and starts the activity of that event 
+     * Creates intent and starts the activity of that event
      *
      * @param currentUser is the user of Firebase
      */
