@@ -19,7 +19,7 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <SearchView
-        android:id="@+id/searchView2"
+        android:id="@+id/searchCriteria"
         android:layout_width="344dp"
         android:layout_height="44dp"
         tools:layout_editor_absoluteX="20dp"
@@ -38,7 +38,7 @@
         app:layout_constraintTop_toBottomOf="@+id/my_toolbar"></android.support.v7.widget.RecyclerView>
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/Age"
         android:layout_width="158dp"
         android:layout_height="55dp"
         android:layout_marginBottom="8dp"
@@ -46,14 +46,14 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/recycle"
-        app:layout_constraintEnd_toStartOf="@+id/spinner2"
+        app:layout_constraintEnd_toStartOf="@+id/Gender"
         app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView2"
+        app:layout_constraintTop_toBottomOf="@+id/searchCriteria"
         app:layout_constraintVertical_bias="0.54" />
 
     <Spinner
-        android:id="@+id/spinner2"
+        android:id="@+id/Gender"
         android:layout_width="162dp"
         android:layout_height="55dp"
         android:layout_marginBottom="8dp"
@@ -61,7 +61,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/recycle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView2" />
+        app:layout_constraintTop_toBottomOf="@+id/searchCriteria" />
 
     <!--<ListView-->
     <!--android:id="@+id/ListView"-->
