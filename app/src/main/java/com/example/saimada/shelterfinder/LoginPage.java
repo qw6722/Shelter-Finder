@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +54,17 @@ public class LoginPage extends AppCompatActivity {
 
         genderSpinner = (Spinner) findViewById(R.id.Gender);
         ageSpinner = (Spinner) findViewById((R.id.Age));
+
+        ArrayAdapter<String> adapterGenderSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item ,User.possibleGender);
+        adapterGenderSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        genderSpinner.setAdapter(adapterGenderSpinner);
+
+        ArrayAdapter<String> adapterAgeSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item ,User.possibleAges);
+        adapterAgeSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ageSpinner.setAdapter(adapterAgeSpinner);
+
+
+
         recyclerView = findViewById(R.id.recycle);
         recyclerView.setHasFixedSize(true);
 

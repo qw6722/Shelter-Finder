@@ -1,13 +1,20 @@
 package com.example.saimada.shelterfinder;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 /**
  * Created by saimada on 2/20/18.
  */
 
 public class User {
+    public static List<String> possibleGender = Arrays.asList("Male", "Female");
+    public static List<String> possibleAges = Arrays.asList("Anyone", "YoungAdults", "Adults", "Chilren", "FamilyAndNewborn");
+
+
     private String username;
     private String password;
     private boolean isAdmin;
+
 
     /**
      * Creates user object.
