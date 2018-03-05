@@ -7,7 +7,7 @@ import java.util.List;
  */
 
 public class User {
-    public static List<String> possibleGender = Arrays.asList("Male", "Female");
+    public static List<String> possibleGender = Arrays.asList("Anyone","Male", "Female");
     public static List<String> possibleAges = Arrays.asList("Anyone", "YoungAdults", "Adults", "Chilren", "FamilyAndNewborn");
 
 

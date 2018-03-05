@@ -11,12 +11,17 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+
+import android.util.Log;
+
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,6 +41,7 @@ public class LoginPage extends AppCompatActivity {
     Toolbar toolbar = null;
     RecyclerView recyclerView = null;
     List<Shelter> list = new ArrayList<>();
+    List<Shelter> filteredList = new ArrayList<>();
 
     private DatabaseReference ref;
     RecyclerView.Adapter adapter;
@@ -45,7 +51,7 @@ public class LoginPage extends AppCompatActivity {
     private Spinner ageSpinner;
     private Button filter;
     private Button clear;
-    private TextView search;
+    private SearchView search;
 
     //Keeping track of Spinner changes
     private String _gender = "NA";
@@ -65,14 +71,35 @@ public class LoginPage extends AppCompatActivity {
 
         filter = (Button) findViewById(R.id.Filter);
         clear = (Button) findViewById(R.id.Clear);
-        search = (TextView) findViewById(R.id.searchCriteria);
+        search = (SearchView) findViewById(R.id.searchCriteria);
 
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 _gender = genderSpinner.getSelectedItem().toString();
                 _age = ageSpinner.getSelectedItem().toString();
-                _search  = search.getText().toString();
+                _search  = search.getQuery().toString();
+                for (int i = 0; i < list.size(); i++) {
+                    if (list.get(i).getAddress().toLowerCase().contains(_search.toLowerCase())) {
+                        filteredList.add(list.get(i));
+                    } else if (list.get(i).getRestrictions().toLowerCase().contains(_gender.toLowerCase())) {
+                        filteredList.add(list.get(i));
+                    } else if (_age.equals("Children") && list.get(i).getRestrictions().toLowerCase().contains("children")) {
+                        filteredList.add(list.get(i));
+                    } else if (_age.equals("FamilyAndNewborn") && list.get(i).getRestrictions().toLowerCase().contains("newborn")) {
+                        filteredList.add(list.get(i));
+                    } else if (_age.equals("YoungAdult") && list.get(i).getRestrictions().toLowerCase().contains("young adult")) {
+                        filteredList.add(list.get(i));
+                    } else if (_age.equals("Anyone") || _gender.equals("Anyone")) {
+                        filteredList.add(list.get(i));
+                    }
+                }
+                Log.e("size ", (String.valueOf(filteredList.size())));
+                adapter = new ShelterRecyclerAdapter(filteredList,LoginPage.this);
+                recyclerView.setAdapter(adapter);
+                Log.e("CHECKING!!!!!!!!!!!!",_gender + " " + _age + " " + _search);
+
+
             }
         });
 
@@ -84,7 +111,12 @@ public class LoginPage extends AppCompatActivity {
                 _search = "";
                 genderSpinner.setSelection(0);
                 ageSpinner.setSelection(0);
-                search.setText("");
+                search.setQuery("", false);
+                search.clearFocus();
+                Log.e("CHECKING!!!!!!!!! Clear",_gender + " " + _age + " " + _search);
+                adapter = new ShelterRecyclerAdapter(list,LoginPage.this);
+                recyclerView.setAdapter(adapter);
+
             }
         });
 

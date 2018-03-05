@@ -102,4 +102,9 @@ public class Shelter {
     public void setUniqueKey(String uniqueKey) {
         UniqueKey = uniqueKey;
     }
+
+    @Override
+    public String toString() {
+        return "Address " + this.getAddress() + "/n Shelter Name " + this.getShelterName();
+    }
 }

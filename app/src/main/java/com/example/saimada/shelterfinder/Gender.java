@@ -9,6 +9,7 @@ package com.example.saimada.shelterfinder;
  * Enums filtering for gender
  */
 public enum Gender {
+    ANYONE("Anyone"),
     MALE("Male"),
     FEMALE("Female");
 

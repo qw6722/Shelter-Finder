@@ -11,7 +11,7 @@ public enum AgeRange {
     ANYONE("Anyone"),
     YOUNGADULTS("YoungAdults"),
     ADULTS("Adults"),
-    CHILDREN("Chilren"),
+    CHILDREN("Children"),
     FAMILYANDNEWBORN("FamilyAndNewborn");
 
     private String restrictions;
