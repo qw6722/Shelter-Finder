@@ -38,7 +38,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="70dp"
         android:focusable="true"
-        android:hint="Enter Name"
+        android:hint="Enter Email Address"
         android:textColorHighlight="#ff7eff15"
         android:textColorHint="#ffff25e6"
         app:layout_constraintEnd_toEndOf="parent"

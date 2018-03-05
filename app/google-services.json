@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "291949242486-g4crd4iq2ieadaisel7a0avvenhls4o5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.saimada.shelterfinder",
+            "certificate_hash": "137ee73cd3cbf40c3545639b75e88698b3b618ed"
+          }
+        },
+        {
           "client_id": "291949242486-jj9hootu8pb4cq5ikaclscvebd9ri1l4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
