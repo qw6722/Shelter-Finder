@@ -33,6 +33,14 @@ public class LoginPage extends AppCompatActivity {
     private DatabaseReference ref;
     RecyclerView.Adapter adapter;
     SwipeController swipeController;
+    //Used for binding and getting information
+    private Spinner genderSpinner;
+    private Spinner ageSpinner;
+
+    //Keeping track of Spinner changes
+    private String _gender = "NA";
+    private String _age = "Anyone";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,5 +129,6 @@ public class LoginPage extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    
 
 }
