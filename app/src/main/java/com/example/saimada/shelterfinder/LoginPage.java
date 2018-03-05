@@ -11,15 +11,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
  import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
- import android.view.Menu;
+import android.view.Menu;
 import android.view.MenuItem;
- import android.view.View;
- import android.widget.ArrayAdapter;
- import android.widget.ListView;
- import android.widget.TextView;
 
- import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuth;
  import com.google.firebase.database.ChildEventListener;
  import com.google.firebase.database.DataSnapshot;
  import com.google.firebase.database.DatabaseError;
@@ -42,7 +37,7 @@ public class LoginPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_page);
+        setContentView(R.layout.activity_recycler_view);
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
         recyclerView = findViewById(R.id.recycle);
