@@ -1,6 +1,7 @@
 package com.example.saimada.shelterfinder;
 
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,7 +10,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
  import android.support.v7.widget.Toolbar;
- import android.util.Log;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
  import android.view.Menu;
 import android.view.MenuItem;
  import android.view.View;
@@ -35,6 +37,7 @@ public class LoginPage extends AppCompatActivity {
     List<Shelter> list = new ArrayList<>();
     private DatabaseReference ref;
     RecyclerView.Adapter adapter;
+    SwipeController swipeController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,28 @@ public class LoginPage extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(LoginPage.this));
+
+        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+                swipeController.onDraw(c);
+            }
+        });
+
+        swipeController= new SwipeController(new SwipeControllerActions() {
+            @Override
+            public void onLeftClicked(int position) {
+                Intent intent = new Intent(LoginPage.this, SingleShelterView.class);
+                intent.putExtra("shelter_name",list.get(position).getShelterName());
+                intent.putExtra("shelter_capacity",list.get(position).getCapacity());
+                intent.putExtra("shelter_restriction",list.get(position).getRestrictions());
+                intent.putExtra("shelter_address",list.get(position).getAddress());
+                intent.putExtra("shelter_phone",list.get(position).getPhoneNumber());
+                startActivity(intent);
+            }
+        });
+        ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeController);
+        itemTouchhelper.attachToRecyclerView(recyclerView);
 
         ref = FirebaseDatabase.getInstance().getReference().child("Data");
         ref.addValueEventListener(new ValueEventListener() {
@@ -69,7 +94,9 @@ public class LoginPage extends AppCompatActivity {
 
 
 
+
     }
+
 
     private void sendToStart() {
         Intent startIntent = new Intent(LoginPage.this, Opening.class);
