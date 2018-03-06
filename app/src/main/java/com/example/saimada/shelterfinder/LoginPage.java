@@ -79,19 +79,37 @@ public class LoginPage extends AppCompatActivity {
                 _gender = genderSpinner.getSelectedItem().toString();
                 _age = ageSpinner.getSelectedItem().toString();
                 _search  = search.getQuery().toString();
-                for (int i = 0; i < list.size(); i++) {
-                    if (list.get(i).getAddress().toLowerCase().contains(_search.toLowerCase())) {
-                        filteredList.add(list.get(i));
-                    } else if (list.get(i).getRestrictions().toLowerCase().contains(_gender.toLowerCase())) {
-                        filteredList.add(list.get(i));
-                    } else if (_age.equals("Children") && list.get(i).getRestrictions().toLowerCase().contains("children")) {
-                        filteredList.add(list.get(i));
-                    } else if (_age.equals("FamilyAndNewborn") && list.get(i).getRestrictions().toLowerCase().contains("newborn")) {
-                        filteredList.add(list.get(i));
-                    } else if (_age.equals("YoungAdult") && list.get(i).getRestrictions().toLowerCase().contains("young adult")) {
-                        filteredList.add(list.get(i));
-                    } else if (_age.equals("Anyone") || _gender.equals("Anyone")) {
-                        filteredList.add(list.get(i));
+
+                // Filtering for name
+                if (!_search.equals("")) {
+                    for (int i = 0;  i < list.size(); i++) {
+                        if (_search.equals(list.get(i).getShelterName())) {
+                            filteredList.add(list.get(i));
+                        }
+                    }
+                }
+
+                // Filtering for age
+                if (!_age.equals("Anyone")) {
+                    for (int i = 0; i < filteredList.size(); i++) {
+                        if (_age.equals("Children") && !filteredList.get(i).getRestrictions().toLowerCase().contains("children")) {
+                            filteredList.remove(i);
+                        } else if (_age.equals("FamilyAndNewborn") && !filteredList.get(i).getRestrictions().toLowerCase().contains("newborn")) {
+                            filteredList.remove(i);
+                        } else if (_age.equals("YoungAdult") && !filteredList.get(i).getRestrictions().toLowerCase().contains("young adult")) {
+                            filteredList.remove(i);
+                        }
+                    }
+                }
+
+                //Filtering for age
+                if (!_gender.equals("Anyone")) {
+                    for (int i = 0; i < filteredList.size(); i++) {
+                        if (_age.equals("Male") && !filteredList.get(i).getRestrictions().toLowerCase().contains("children")) {
+                            filteredList.remove(i);
+                        } else if (_age.equals("Female") && !filteredList.get(i).getRestrictions().toLowerCase().contains("newborn")) {
+                            filteredList.remove(i);
+                        }
                     }
                 }
                 Log.e("size ", (String.valueOf(filteredList.size())));
