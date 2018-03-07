@@ -79,13 +79,11 @@ public class LoginPage extends AppCompatActivity {
                 _gender = genderSpinner.getSelectedItem().toString();
                 _age = ageSpinner.getSelectedItem().toString();
                 _search  = search.getQuery().toString();
-
+                filteredList = new ArrayList<>();
                 // Filtering for name
-                if (!_search.equals("")) {
-                    for (int i = 0;  i < list.size(); i++) {
-                        if (_search.equals(list.get(i).getShelterName())) {
-                            filteredList.add(list.get(i));
-                        }
+                for (int i = 0;  i < list.size(); i++) {
+                    if ((list.get(i).getShelterName().toLowerCase()).contains(_search.toLowerCase()) || _search.equals("")) {
+                        filteredList.add(list.get(i));
                     }
                 }
 
@@ -94,10 +92,13 @@ public class LoginPage extends AppCompatActivity {
                     for (int i = 0; i < filteredList.size(); i++) {
                         if (_age.equals("Children") && !filteredList.get(i).getRestrictions().toLowerCase().contains("children")) {
                             filteredList.remove(i);
+                            i--;
                         } else if (_age.equals("FamilyAndNewborn") && !filteredList.get(i).getRestrictions().toLowerCase().contains("newborn")) {
                             filteredList.remove(i);
-                        } else if (_age.equals("YoungAdult") && !filteredList.get(i).getRestrictions().toLowerCase().contains("young adult")) {
+                            i--;
+                        } else if (_age.equals("YoungAdults") && !filteredList.get(i).getRestrictions().toLowerCase().contains("young adults")) {
                             filteredList.remove(i);
+                            i--;
                         }
                     }
                 }
@@ -105,10 +106,15 @@ public class LoginPage extends AppCompatActivity {
                 //Filtering for age
                 if (!_gender.equals("Anyone")) {
                     for (int i = 0; i < filteredList.size(); i++) {
-                        if (_age.equals("Male") && !filteredList.get(i).getRestrictions().toLowerCase().contains("children")) {
+                        Log.e("tag", filteredList.get(i).getRestrictions());
+                        if (_gender.equals("Male") && !filteredList.get(i).getRestrictions().toLowerCase().contains("men")
+                                || filteredList.get(i).getRestrictions().toLowerCase().contains("women")) {
                             filteredList.remove(i);
-                        } else if (_age.equals("Female") && !filteredList.get(i).getRestrictions().toLowerCase().contains("newborn")) {
+                            i--;
+                        } else if (_gender.equals("Female") && !filteredList.get(i).getRestrictions().toLowerCase().contains("women")) {
+                            Log.e("checking", "here");
                             filteredList.remove(i);
+                            i--;
                         }
                     }
                 }
