@@ -40,8 +40,9 @@ public class LoginPage extends AppCompatActivity {
 
     Toolbar toolbar = null;
     RecyclerView recyclerView = null;
-    List<Shelter> list = new ArrayList<>();
-    List<Shelter> filteredList = new ArrayList<>();
+    List<Shelter> list = new ArrayList<>();;
+    List<Shelter> filteredList = new ArrayList<>();;
+
 
     private DatabaseReference ref;
     RecyclerView.Adapter adapter;
@@ -87,18 +88,17 @@ public class LoginPage extends AppCompatActivity {
                     }
                 }
 
+                List<Shelter> tempList = new ArrayList<>(filteredList);
+
                 // Filtering for age
                 if (!_age.equals("Anyone")) {
                     for (int i = 0; i < filteredList.size(); i++) {
                         if (_age.equals("Children") && !filteredList.get(i).getRestrictions().toLowerCase().contains("children")) {
-                            filteredList.remove(i);
-                            i--;
+                            tempList.remove(filteredList.get(i));
                         } else if (_age.equals("FamilyAndNewborn") && !filteredList.get(i).getRestrictions().toLowerCase().contains("newborn")) {
-                            filteredList.remove(i);
-                            i--;
+                            tempList.remove(filteredList.get(i));
                         } else if (_age.equals("YoungAdults") && !filteredList.get(i).getRestrictions().toLowerCase().contains("young adults")) {
-                            filteredList.remove(i);
-                            i--;
+                            tempList.remove(filteredList.get(i));
                         }
                     }
                 }
@@ -109,12 +109,10 @@ public class LoginPage extends AppCompatActivity {
                         Log.e("tag", filteredList.get(i).getRestrictions());
                         if (_gender.equals("Male") && !filteredList.get(i).getRestrictions().toLowerCase().contains("men")
                                 || filteredList.get(i).getRestrictions().toLowerCase().contains("women")) {
-                            filteredList.remove(i);
-                            i--;
+                            tempList.remove(filteredList.get(i));
                         } else if (_gender.equals("Female") && !filteredList.get(i).getRestrictions().toLowerCase().contains("women")) {
                             Log.e("checking", "here");
-                            filteredList.remove(i);
-                            i--;
+                            tempList.remove(filteredList.get(i));
                         }
                     }
                 }
@@ -144,11 +142,11 @@ public class LoginPage extends AppCompatActivity {
             }
         });
 
-        ArrayAdapter<String> adapterGenderSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item ,User.possibleGender);
+        ArrayAdapter<String> adapterGenderSpinner = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item ,User.possibleGender);
         adapterGenderSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         genderSpinner.setAdapter(adapterGenderSpinner);
 
-        ArrayAdapter<String> adapterAgeSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item ,User.possibleAges);
+        ArrayAdapter<String> adapterAgeSpinner = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item ,User.possibleAges);
         adapterAgeSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ageSpinner.setAdapter(adapterAgeSpinner);
 
@@ -185,7 +183,7 @@ public class LoginPage extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                list = new ArrayList<Shelter>();
+                list = new ArrayList<>();
                 for(DataSnapshot dataSnapshot1 :dataSnapshot.getChildren()){
 
                     Shelter value = dataSnapshot1.getValue(Shelter.class);

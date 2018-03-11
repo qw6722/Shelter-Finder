@@ -19,7 +19,9 @@ public class Shelter {
     public Shelter() {
 
     }
-    public Shelter(String address, String capacity, double latitude, double longitude, String phoneNumber, String restrictions, String shelterName, String specialNotes, String uniqueKey) {
+    public Shelter(String address, String capacity, double latitude, double longitude,
+                   String phoneNumber, String restrictions, String shelterName,
+                   String specialNotes, String uniqueKey) {
         Address = address;
         Capacity = capacity;
         Latitude = latitude;
