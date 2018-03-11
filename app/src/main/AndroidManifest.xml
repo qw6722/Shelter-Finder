@@ -21,7 +21,9 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".Register" />
         <activity android:name=".LoginPage" />
-        <activity android:name=".SingleShelterView"></activity>
+        <activity android:name=".SingleShelterView"/>
+        <activity android:name=".Reserve">
+        </activity>
     </application>
 
 </manifest>

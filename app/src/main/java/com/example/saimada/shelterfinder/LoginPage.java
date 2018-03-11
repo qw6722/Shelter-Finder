@@ -176,6 +176,12 @@ public class LoginPage extends AppCompatActivity {
                 intent.putExtra("shelter_phone",list.get(position).getPhoneNumber());
                 startActivity(intent);
             }
+            @Override
+            public void onRightClicked(int position) {
+                Intent intent = new Intent(LoginPage.this, Reserve.class);
+                intent.putExtra("shelter_name", list.get(position).getShelterName());
+                startActivity(intent);
+            }
         });
         ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeController);
         itemTouchhelper.attachToRecyclerView(recyclerView);

@@ -10,7 +10,6 @@ package com.example.saimada.shelterfinder;
 public enum AgeRange {
     ANYONE("Anyone"),
     YOUNGADULTS("YoungAdults"),
-    ADULTS("Adults"),
     CHILDREN("Children"),
     FAMILYANDNEWBORN("FamilyAndNewborn");
 
