@@ -102,19 +102,18 @@ public class LoginPage extends AppCompatActivity {
                         }
                     }
                 }
-
-                //Filtering for age
+                //Filtering for gender
                 if (!_gender.equals("Anyone")) {
                     for (int i = 0; i < filteredList.size(); i++) {
-                        Log.e("tag", filteredList.get(i).getRestrictions());
-                        if (_gender.equals("Male") && !filteredList.get(i).getRestrictions().toLowerCase().contains("men")
-                                || filteredList.get(i).getRestrictions().toLowerCase().contains("women")) {
+                        String restrictions = filteredList.get(i).getRestrictions().replace("/","").toLowerCase();
+                        if (_gender.equals("Male") && (!restrictions.contains("men")
+                                || restrictions.contains("women"))) {
                             filteredList.remove(i);
                             i--;
-                        } else if (_gender.equals("Female") && !filteredList.get(i).getRestrictions().toLowerCase().contains("women")) {
-                            Log.e("checking", "here");
-                            filteredList.remove(i);
-                            i--;
+                        } else if (_gender.equals("Female") && !restrictions.contains("women")) {
+                                filteredList.remove(i);
+                                i--;
+
                         }
                     }
                 }
