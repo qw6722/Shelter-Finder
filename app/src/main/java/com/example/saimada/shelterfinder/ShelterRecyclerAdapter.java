@@ -11,9 +11,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import java.util.List;
 
-/**
- * Created by csa on 3/7/2017.
- */
 
 public class ShelterRecyclerAdapter extends RecyclerView.Adapter<ShelterRecyclerAdapter.MyHoder>{
 
