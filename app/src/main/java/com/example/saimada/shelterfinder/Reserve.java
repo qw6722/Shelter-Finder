@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -64,8 +65,16 @@ public class Reserve  extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 _numOfPeople =  numOfBeds.getText().toString();
+                int _numIntOfPeople =  Integer.parseInt(_numOfPeople);
+                if (_numIntOfPeople < 0 || _numIntOfPeople > 50) { //get the int value of the shelter capacity
+                    Toast.makeText(Reserve.this, "Number invalid. It must be positive and less than the shelter capacity.",
+                            Toast.LENGTH_SHORT).show();
+                    _numIntOfPeople = 0;
+                }
             }
         });
+
+
     }
 
     @Override
