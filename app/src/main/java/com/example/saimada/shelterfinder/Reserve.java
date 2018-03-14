@@ -67,7 +67,7 @@ public class Reserve  extends AppCompatActivity{
         nameOfShelter.setKeyListener(null);
         nameOfShelter.setText(name);
         shelterCapacity.setKeyListener(null);
-        shelterCapacity.setText("HIIII");
+        shelterCapacity.setText("Capacity: "+cap);
 
         _numOfPeople = "";
 
@@ -109,7 +109,7 @@ public class Reserve  extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 String cap = "Blah";
-                int _numIntOfPeople = Integer.parseInt(_numOfPeople);
+                int _numIntOfPeople = Integer.parseInt(numOfBeds.getText().toString());
                 addShelterCapacity(_numIntOfPeople, cap);
             }
         });
@@ -124,10 +124,10 @@ public class Reserve  extends AppCompatActivity{
         return capInt;
     }
 
-    public void setShelterCapacity(int reservations, String capacity) {
+    public void setShelterCapacity(int reservations, String cap) {
         Bundle extras = getIntent().getExtras();
         String name = extras.getString("shelter_name");
-        capacity = extras.getString("shelter_capacity");
+        String capacity = extras.getString("shelter_capacity");
         final int reserve = Integer.parseInt(capacity) - reservations;
 
         ref = FirebaseDatabase.getInstance().getReference().child("Data");
@@ -141,14 +141,15 @@ public class Reserve  extends AppCompatActivity{
             }
         });
 
-        //capacity = extras.getString("shelter_capacity");
+        shelterCapacity.setText("Capacity: "+reserve);
     }
 
-    public void addShelterCapacity(int reservations, String capacity) {
+    public void addShelterCapacity(int reservations, String cap) {
         Bundle extras = getIntent().getExtras();
         String name = extras.getString("shelter_name");
-        capacity = extras.getString("shelter_capacity");
-        final int reserve = Integer.parseInt(capacity) + reservations;
+        String capacity = extras.getString("shelter_capacity");
+        System.out.println(capacity);
+        final int reserve = Integer.parseInt(capacity);
 
         ref = FirebaseDatabase.getInstance().getReference().child("Data");
         ref.child(findParent()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -161,7 +162,7 @@ public class Reserve  extends AppCompatActivity{
             }
         });
 
-        //capacity = extras.getString("shelter_capacity");
+        shelterCapacity.setText("Capacity: " + reserve);
     }
 
     public String findParent() {
