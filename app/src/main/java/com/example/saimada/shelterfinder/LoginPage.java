@@ -180,6 +180,8 @@ public class LoginPage extends AppCompatActivity {
             public void onRightClicked(int position) {
                 Intent intent = new Intent(LoginPage.this, Reserve.class);
                 intent.putExtra("shelter_name", list.get(position).getShelterName());
+                intent.putExtra("shelter_intCapacity", list.get(position).getIntCapacity());
+                System.out.print(list.get(position).getIntCapacity());
                 startActivity(intent);
             }
         });

@@ -35,6 +35,7 @@ public class Reserve  extends AppCompatActivity{
     private EditText numOfBeds;
     private Button reserve;
     private Toolbar toolbar;
+    private DatabaseReference ref;
 
     private String _numOfPeople;
 
@@ -57,6 +58,7 @@ public class Reserve  extends AppCompatActivity{
         Bundle extras = getIntent().getExtras();
 
         String name = extras.getString("shelter_name");
+        int cap = extras.getInt("shelter_intCapacity");
 
         nameOfShelter.setKeyListener(null);
         nameOfShelter.setText(name);
@@ -64,6 +66,7 @@ public class Reserve  extends AppCompatActivity{
         reserve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                getShelterCapacity();
                 _numOfPeople =  numOfBeds.getText().toString();
                 int _numIntOfPeople =  Integer.parseInt(_numOfPeople);
                 if (_numIntOfPeople < 0 || _numIntOfPeople > 50) { //get the int value of the shelter capacity
@@ -73,7 +76,20 @@ public class Reserve  extends AppCompatActivity{
                 }
             }
         });
+    }
 
+    //create a method that gets the data from Firebase and returns the shelter's reservation int
+    public void getShelterCapacity() {
+
+        Bundle extras = getIntent().getExtras();
+        String name = extras.getString("shelter_name");
+        int cap = extras.getInt("shelter_intCapacity");
+        System.out.println(name);
+        System.out.println(cap);
+        //return cap;
+    }
+
+    public void setShelterCapacity() {
 
     }
 
