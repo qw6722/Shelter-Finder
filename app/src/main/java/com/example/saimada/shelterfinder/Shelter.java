@@ -8,7 +8,7 @@ public class Shelter {
 
     private String Address;
     private String Capacity;
-    private int IntCap;
+    private String InitialCapacity;
     private double Latitude;
     private double Longitude;
     private String PhoneNumber;
@@ -22,10 +22,10 @@ public class Shelter {
     }
     public Shelter(String address, String capacity, double latitude, double longitude,
                    String phoneNumber, String restrictions, String shelterName,
-                   String specialNotes, String uniqueKey, int intCapacity) {
+                   String specialNotes, String uniqueKey, String intCapacity) {
         Address = address;
         Capacity = capacity;
-        IntCap = intCapacity;
+        InitialCapacity = intCapacity;
         Latitude = latitude;
         Longitude = longitude;
         PhoneNumber = phoneNumber;
@@ -108,9 +108,9 @@ public class Shelter {
         UniqueKey = uniqueKey;
     }
 
-    public int getIntCapacity() { return IntCap; }
+    public String getIntCapacity() { return InitialCapacity; }
 
-    public void setIntCapacity(int intCapNew) { IntCap = intCapNew; }
+    public void setIntCapacity(String intCapNew) { InitialCapacity = intCapNew; }
 
     @Override
     public String toString() {

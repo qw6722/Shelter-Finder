@@ -41,6 +41,7 @@ public class LoginPage extends AppCompatActivity {
     Toolbar toolbar = null;
     RecyclerView recyclerView = null;
     List<Shelter> list = new ArrayList<>();
+    List<String> parents = new ArrayList<>();
     List<Shelter> filteredList = new ArrayList<>();
 
     private DatabaseReference ref;
@@ -179,9 +180,9 @@ public class LoginPage extends AppCompatActivity {
             @Override
             public void onRightClicked(int position) {
                 Intent intent = new Intent(LoginPage.this, Reserve.class);
+                intent.putExtra("shelter_key", parents.get(position));
                 intent.putExtra("shelter_name", list.get(position).getShelterName());
-                intent.putExtra("shelter_intCapacity", list.get(position).getIntCapacity());
-                System.out.print(list.get(position).getIntCapacity());
+                intent.putExtra("shelter_capacity", list.get(position).getCapacity());
                 startActivity(intent);
             }
         });
@@ -192,12 +193,12 @@ public class LoginPage extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                parents = new ArrayList<String>();
                 list = new ArrayList<Shelter>();
                 for(DataSnapshot dataSnapshot1 :dataSnapshot.getChildren()){
-
+                    parents.add(dataSnapshot1.getKey());
                     Shelter value = dataSnapshot1.getValue(Shelter.class);
                     list.add(value);
-
                 }
                 adapter = new ShelterRecyclerAdapter(list,LoginPage.this);
                 recyclerView.setAdapter(adapter);

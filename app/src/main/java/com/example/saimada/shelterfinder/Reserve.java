@@ -33,10 +33,12 @@ public class Reserve  extends AppCompatActivity{
 
     private TextView nameOfShelter;
     private EditText numOfBeds;
+    private TextView shelterCapacity;
     private Button reserve;
+    private Button cancel;
     private Toolbar toolbar;
     private DatabaseReference ref;
-
+    List<Shelter> list = new ArrayList<>();
     private String _numOfPeople;
 
 
@@ -49,6 +51,8 @@ public class Reserve  extends AppCompatActivity{
         nameOfShelter = (TextView) findViewById(R.id.NameOfShelter);
         numOfBeds = findViewById(R.id.NumberOfBeds);
         reserve =  findViewById(R.id.reserve);
+        shelterCapacity = (TextView) findViewById(R.id.shelterCapacity);
+        cancel = findViewById(R.id.cancel);
 
         toolbar = (Toolbar) findViewById(R.id.toolbarReserve);
         setSupportActionBar(toolbar);
@@ -58,39 +62,114 @@ public class Reserve  extends AppCompatActivity{
         Bundle extras = getIntent().getExtras();
 
         String name = extras.getString("shelter_name");
-        int cap = extras.getInt("shelter_intCapacity");
+        String cap = extras.getString("shelter_capacity");
 
         nameOfShelter.setKeyListener(null);
         nameOfShelter.setText(name);
+        shelterCapacity.setKeyListener(null);
+        shelterCapacity.setText("HIIII");
+
+        _numOfPeople = "";
+
+        /*ref = FirebaseDatabase.getInstance().getReference().child("Data");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                list = new ArrayList<Shelter>();
+                for(DataSnapshot dataSnapshot1 :dataSnapshot.getChildren()){
+
+                    Shelter value = dataSnapshot1.getValue(Shelter.class);
+                    list.add(value);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });*/
 
         reserve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getShelterCapacity();
                 _numOfPeople =  numOfBeds.getText().toString();
                 int _numIntOfPeople =  Integer.parseInt(_numOfPeople);
-                if (_numIntOfPeople < 0 || _numIntOfPeople > 50) { //get the int value of the shelter capacity
+                if (_numIntOfPeople < 0 || _numIntOfPeople > getShelterCapacity()) { //get the int value of the shelter capacity
                     Toast.makeText(Reserve.this, "Number invalid. It must be positive and less than the shelter capacity.",
                             Toast.LENGTH_SHORT).show();
                     _numIntOfPeople = 0;
+                } else {
+                    String cap = "Blah";
+                    setShelterCapacity(_numIntOfPeople, cap);
                 }
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String cap = "Blah";
+                int _numIntOfPeople = Integer.parseInt(_numOfPeople);
+                addShelterCapacity(_numIntOfPeople, cap);
             }
         });
     }
 
     //create a method that gets the data from Firebase and returns the shelter's reservation int
-    public void getShelterCapacity() {
-
+    public int getShelterCapacity() {
         Bundle extras = getIntent().getExtras();
         String name = extras.getString("shelter_name");
-        int cap = extras.getInt("shelter_intCapacity");
-        System.out.println(name);
-        System.out.println(cap);
-        //return cap;
+        String cap = extras.getString("shelter_capacity");
+        int capInt = Integer.parseInt(cap);
+        return capInt;
     }
 
-    public void setShelterCapacity() {
+    public void setShelterCapacity(int reservations, String capacity) {
+        Bundle extras = getIntent().getExtras();
+        String name = extras.getString("shelter_name");
+        capacity = extras.getString("shelter_capacity");
+        final int reserve = Integer.parseInt(capacity) - reservations;
 
+        ref = FirebaseDatabase.getInstance().getReference().child("Data");
+        ref.child(findParent()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                dataSnapshot.getRef().child("Capacity").setValue("" + reserve);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        //capacity = extras.getString("shelter_capacity");
+    }
+
+    public void addShelterCapacity(int reservations, String capacity) {
+        Bundle extras = getIntent().getExtras();
+        String name = extras.getString("shelter_name");
+        capacity = extras.getString("shelter_capacity");
+        final int reserve = Integer.parseInt(capacity) + reservations;
+
+        ref = FirebaseDatabase.getInstance().getReference().child("Data");
+        ref.child(findParent()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                dataSnapshot.getRef().child("Capacity").setValue("" + reserve);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        //capacity = extras.getString("shelter_capacity");
+    }
+
+    public String findParent() {
+        Bundle extras = getIntent().getExtras();
+        String name = extras.getString("shelter_name");
+        String cap = extras.getString("shelter_capacity");
+        String parent = extras.getString("shelter_key");
+        return parent;
     }
 
     @Override
