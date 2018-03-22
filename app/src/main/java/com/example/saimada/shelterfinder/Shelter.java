@@ -1,5 +1,7 @@
 package com.example.saimada.shelterfinder;
 
+import java.util.Objects;
+
 /**
  * Represents by a Shelter
  * Rewritten by
@@ -223,5 +225,16 @@ public class Shelter {
     public String toString() {
         return String.format("Address %s%n Shelter Name %s",
                 address, shelterName);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return this == other || other instanceof Shelter
+                && uniqueKey.equals(((Shelter) other).uniqueKey);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(uniqueKey);
     }
 }

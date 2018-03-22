@@ -2,10 +2,13 @@ package com.example.saimada.shelterfinder;
 
 import java.util.Arrays;
 import java.util.List;
-/**
- * Created by saimada on 2/20/18.
- */
+import java.util.Objects;
 
+/**
+ * Represents a User of the program
+ * @author Sai, Shishir
+ * @since 2/20/18
+ */
 public class User {
     public static List<String> possibleGender = Arrays.asList("Anyone","Male", "Female");
     public static List<String> possibleAges = Arrays.asList("Anyone", "YoungAdults",
@@ -15,7 +18,6 @@ public class User {
     private String username;
     private String password;
     private boolean isAdmin;
-    private boolean checkedIn;
 
     /**
      * Creates user object.
@@ -75,19 +77,20 @@ public class User {
         this.username = username;
     }
 
-    /**
-     * Sees if the user is currently check in to a Shelter or not
-     * @return the check in status of the user
-     */
-    public boolean isCheckedIn() {
-        return checkedIn;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof User)) {
+            return false;
+        }
+        User that = (User) obj;
+        return Objects.equals(username, that.username);
     }
 
-    /**
-     * Set to true if the user is currently check in anywhere
-     * @param checkedIn true if checked in, false otherwise
-     */
-    public void setCheckedIn(boolean checkedIn) {
-        this.checkedIn = checkedIn;
+    @Override
+    public int hashCode() {
+        return Objects.hash(username);
     }
 }
