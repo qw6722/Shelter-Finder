@@ -19,10 +19,7 @@ public class Shelter {
     private String specialNotes;
     private String uniqueKey;
 
-    public Shelter() {
-
-    }
-    public Shelter(String address, String capacity, double latitude,
+    private Shelter(String address, String capacity, double latitude,
                    double longitude, String phoneNumber, String restrictions,
                    String shelterName, String specialNotes, String uniqueKey,
                    String intCapacity) {
@@ -36,6 +33,94 @@ public class Shelter {
         this.shelterName = shelterName;
         this.specialNotes = specialNotes;
         this.uniqueKey = uniqueKey;
+    }
+
+    public interface Builder {
+        Builder withAddress(String address);
+        Builder withCapacity(String capacity);
+        Builder atLongitude(double longitude);
+        Builder atLatitude(double latitude);
+        Builder withPhoneNumber(String phoneNumber);
+        Builder withRestrictions(String restrictions);
+        Builder withName(String name);
+        Builder withSpecialNotes(String specialNotes);
+        Builder withUniqueKey(String uniqueKey);
+        Builder withInitialCapacity(String initialCapacity);
+        Shelter build();
+    }
+
+    public Builder builder() {
+        return new Builder() {
+            private String address, capacity, phoneNumber, restrictions, shelterName, specialNotes;
+            private String uniqueKey, initialCapacity;
+            private double latitude, longitude;
+            @Override
+            public Builder withAddress(String address) {
+                this.address = address;
+                return this;
+            }
+
+            @Override
+            public Builder withCapacity(String capacity) {
+                this.capacity = capacity;
+                return this;
+            }
+
+            @Override
+            public Builder atLongitude(double longitude) {
+                this.longitude = longitude;
+                return this;
+            }
+
+            @Override
+            public Builder atLatitude(double latitude) {
+                this.latitude = latitude;
+                return this;
+            }
+
+            @Override
+            public Builder withPhoneNumber(String phoneNumber) {
+                this.phoneNumber = phoneNumber;
+                return this;
+            }
+
+            @Override
+            public Builder withRestrictions(String restrictions) {
+                this.restrictions = restrictions;
+                return this;
+            }
+
+            @Override
+            public Builder withName(String name) {
+                this.shelterName = name;
+                return this;
+            }
+
+            @Override
+            public Builder withSpecialNotes(String specialNotes) {
+                this.specialNotes = specialNotes;
+                return this;
+            }
+
+            @Override
+            public Builder withUniqueKey(String uniqueKey) {
+                this.uniqueKey = uniqueKey;
+                return this;
+            }
+
+            @Override
+            public Builder withInitialCapacity(String initialCapacity) {
+                this.initialCapacity = initialCapacity;
+                return this;
+            }
+
+            @Override
+            public Shelter build() {
+                return new Shelter(address, capacity, latitude, longitude, phoneNumber,
+                                    restrictions, shelterName, specialNotes, uniqueKey,
+                                    initialCapacity);
+            }
+        };
     }
 
     public String getAddress() {
