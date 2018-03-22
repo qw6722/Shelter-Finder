@@ -51,9 +51,12 @@ public class Shelter {
 
     public Builder builder() {
         return new Builder() {
-            private String address, capacity, phoneNumber, restrictions, shelterName, specialNotes;
-            private String uniqueKey, initialCapacity;
+            private String address, uniqueKey, phoneNumber, restrictions, shelterName, specialNotes;
+            private String capacity, initialCapacity;
             private double latitude, longitude;
+            private final String BUILD_FAILURE = "Failed to construct new Shelter. Not enough "
+                                                    + "information provided.";
+
             @Override
             public Builder withAddress(String address) {
                 this.address = address;
@@ -116,9 +119,22 @@ public class Shelter {
 
             @Override
             public Shelter build() {
+                checkForNulls(address, capacity, phoneNumber, restrictions, shelterName,
+                                    specialNotes, uniqueKey, initialCapacity);
+                if (latitude == 0.0 || longitude == 0.0) {
+                    throw new IllegalStateException(BUILD_FAILURE);
+                }
                 return new Shelter(address, capacity, latitude, longitude, phoneNumber,
                                     restrictions, shelterName, specialNotes, uniqueKey,
                                     initialCapacity);
+            }
+
+            private void checkForNulls(Object ... args) {
+                for (Object o : args) {
+                    if (o == null) {
+                        throw new IllegalStateException(BUILD_FAILURE);
+                    }
+                }
             }
         };
     }
