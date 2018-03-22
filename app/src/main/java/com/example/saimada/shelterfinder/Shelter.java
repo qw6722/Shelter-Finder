@@ -1,119 +1,126 @@
 package com.example.saimada.shelterfinder;
 
 /**
- * Created by rohit on 2/28/2018.
+ * Represents by a Shelter
+ * Rewritten by
+ * @author Shishir
+ * @since 3/22/18
  */
-
 public class Shelter {
 
-    private String Address;
-    private String Capacity;
-    private String InitialCapacity;
-    private double Latitude;
-    private double Longitude;
-    private String PhoneNumber;
-    private String Restrictions;
-    private String ShelterName;
-    private String SpecialNotes;
-    private String UniqueKey;
+    private String address;
+    private String capacity;
+    private String initialCapacity;
+    private double latitude;
+    private double longitude;
+    private String phoneNumber;
+    private String restrictions;
+    private String shelterName;
+    private String specialNotes;
+    private String uniqueKey;
 
     public Shelter() {
 
     }
-    public Shelter(String address, String capacity, double latitude, double longitude,
-                   String phoneNumber, String restrictions, String shelterName,
-                   String specialNotes, String uniqueKey, String intCapacity) {
-        Address = address;
-        Capacity = capacity;
-        InitialCapacity = intCapacity;
-        Latitude = latitude;
-        Longitude = longitude;
-        PhoneNumber = phoneNumber;
-        Restrictions = restrictions;
-        ShelterName = shelterName;
-        SpecialNotes = specialNotes;
-        UniqueKey = uniqueKey;
-
+    public Shelter(String address, String capacity, double latitude,
+                   double longitude, String phoneNumber, String restrictions,
+                   String shelterName, String specialNotes, String uniqueKey,
+                   String intCapacity) {
+        this.address = address;
+        this.capacity = capacity;
+        this.initialCapacity = intCapacity;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.phoneNumber = phoneNumber;
+        this.restrictions = restrictions;
+        this.shelterName = shelterName;
+        this.specialNotes = specialNotes;
+        this.uniqueKey = uniqueKey;
     }
 
     public String getAddress() {
-        return Address;
+        return address;
     }
 
     public void setAddress(String address) {
-        Address = address;
+        this.address = address;
     }
 
     public String getCapacity() {
-        return Capacity;
+        return capacity;
     }
 
     public void setCapacity(String capacity) {
-        Capacity = capacity;
+        this.capacity = capacity;
     }
 
     public double getLatitude() {
-        return Latitude;
+        return latitude;
     }
 
     public void setLatitude(double latitude) {
-        Latitude = latitude;
+        this.latitude = latitude;
     }
 
     public double getLongitude() {
-        return Longitude;
+        return longitude;
     }
 
     public void setLongitude(double longitude) {
-        Longitude = longitude;
+        this.longitude = longitude;
     }
 
     public String getPhoneNumber() {
-        return PhoneNumber;
+        return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        PhoneNumber = phoneNumber;
+        this.phoneNumber = phoneNumber;
     }
 
     public String getRestrictions() {
-        return Restrictions;
+        return restrictions;
     }
 
     public void setRestrictions(String restrictions) {
-        Restrictions = restrictions;
+        this.restrictions = restrictions;
     }
 
     public String getShelterName() {
-        return ShelterName;
+        return shelterName;
     }
 
     public void setShelterName(String shelterName) {
-        ShelterName = shelterName;
+        this.shelterName = shelterName;
     }
 
     public String getSpecialNotes() {
-        return SpecialNotes;
+        return specialNotes;
     }
 
     public void setSpecialNotes(String specialNotes) {
-        SpecialNotes = specialNotes;
+        this.specialNotes = specialNotes;
     }
 
     public String getUniqueKey() {
-        return UniqueKey;
+        return uniqueKey;
     }
 
     public void setUniqueKey(String uniqueKey) {
-        UniqueKey = uniqueKey;
+        this.uniqueKey = uniqueKey;
     }
 
-    public String getIntCapacity() { return InitialCapacity; }
+    public String getIntCapacity() {
+        return initialCapacity;
+    }
 
-    public void setIntCapacity(String intCapNew) { InitialCapacity = intCapNew; }
+    public void setIntCapacity(String intCapNew) {
+        this.initialCapacity = intCapNew;
+    }
 
     @Override
     public String toString() {
-        return "Address " + this.getAddress() + "/n Shelter Name " + this.getShelterName();
+        return String.format("Address %s%n Shelter Name %s",
+                address, shelterName);
     }
 }

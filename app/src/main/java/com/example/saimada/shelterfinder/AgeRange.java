@@ -1,11 +1,9 @@
 package com.example.saimada.shelterfinder;
 
 /**
- * Created by arnabdey on 3/5/18.
- */
-
-/**
  * Filtering for Age Range
+ * @author arnabdey
+ * @since 3/5/18
  */
 public enum AgeRange {
     ANYONE("Anyone"),
@@ -15,8 +13,11 @@ public enum AgeRange {
 
     private String restrictions;
 
-    private AgeRange(String restrictions) {
+    AgeRange(String restrictions) {
         this.restrictions = restrictions;
     }
 
+    public String getRestrictions() {
+        return restrictions;
+    }
 }

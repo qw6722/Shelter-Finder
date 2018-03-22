@@ -19,7 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 /**
- * Represents a Reservation at a Shelter
+ * Represents a Reservation Page
  * @author arnabdey
  * @since 3/11/18
  */
