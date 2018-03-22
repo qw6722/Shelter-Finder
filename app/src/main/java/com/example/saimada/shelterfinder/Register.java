@@ -8,9 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Switch;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,7 +22,7 @@ public class Register extends AppCompatActivity {
 
     EditText ed1,ed2, ed3, ed4;
     Button b1;
-    String adminpassword = "@dMin";
+    String adminPassword = "@dMin";
     private FirebaseAuth mAuth;
     private DatabaseReference dbRef;
 
@@ -41,13 +39,13 @@ public class Register extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        b1 = (Button)findViewById(R.id.button);
-        ed1 = (EditText)findViewById(R.id.editText);
-        ed2 = (EditText)findViewById(R.id.editText2);
-        ed3 = (EditText)findViewById(R.id.editText3);
-        ed4 = (EditText) findViewById(R.id.editText4);
+        b1 = findViewById(R.id.button);
+        ed1 = findViewById(R.id.editText);
+        ed2 = findViewById(R.id.editText2);
+        ed3 = findViewById(R.id.editText3);
+        ed4 = findViewById(R.id.editText4);
         ed4.setEnabled(false);
-        userType = (Switch)findViewById(R.id.switch1);
+        userType = findViewById(R.id.switch1);
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         dbRef = mFirebaseDatabase.getReference();
         userType.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +66,7 @@ public class Register extends AppCompatActivity {
                                 FirebaseUser user = mAuth.getCurrentUser(); //You Firebase user
                                 String userID = user.getUid();
                                 if (userType.isChecked()) {
-                                    if (ed4.getText().toString().equals(adminpassword)) {
+                                    if (ed4.getText().toString().equals(adminPassword)) {
                                         User userAdding = new User(ed1.getText().toString(), ed2.getText().toString(), true);
                                         dbRef.child("users").child(userID).setValue(userAdding);
                                     }

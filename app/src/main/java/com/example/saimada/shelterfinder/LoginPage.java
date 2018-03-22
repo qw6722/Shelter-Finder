@@ -2,11 +2,8 @@ package com.example.saimada.shelterfinder;
 
 import android.content.Intent;
 import android.graphics.Canvas;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -22,31 +19,28 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.SearchView;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LoginPage extends AppCompatActivity {
 
-    Toolbar toolbar = null;
-    RecyclerView recyclerView = null;
-    List<Shelter> list = new ArrayList<>();
-    List<String> parents = new ArrayList<>();
-    List<Shelter> filteredList = new ArrayList<>();
+    private Toolbar toolbar;
+    private RecyclerView recyclerView;
+    private List<Shelter> list = new ArrayList<>();
+    private List<String> parents = new ArrayList<>();
+    private List<Shelter> filteredList = new ArrayList<>();
 
     private DatabaseReference ref;
-    RecyclerView.Adapter adapter;
-    SwipeController swipeController;
+    private RecyclerView.Adapter adapter;
+    private SwipeController swipeController;
     //Used for binding and getting information
     private Spinner genderSpinner;
     private Spinner ageSpinner;
@@ -64,15 +58,15 @@ public class LoginPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler_view);
-        toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
 
-        genderSpinner = (Spinner) findViewById(R.id.Gender);
-        ageSpinner = (Spinner) findViewById((R.id.Age));
+        genderSpinner = findViewById(R.id.Gender);
+        ageSpinner = findViewById((R.id.Age));
 
-        filter = (Button) findViewById(R.id.Filter);
-        clear = (Button) findViewById(R.id.Clear);
-        search = (SearchView) findViewById(R.id.searchCriteria);
+        filter = findViewById(R.id.Filter);
+        clear = findViewById(R.id.Clear);
+        search = findViewById(R.id.searchCriteria);
 
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,11 +138,15 @@ public class LoginPage extends AppCompatActivity {
             }
         });
 
-        ArrayAdapter<String> adapterGenderSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item ,User.possibleGender);
+        ArrayAdapter<String> adapterGenderSpinner =
+                new ArrayAdapter<>(this,
+                                    android.R.layout.simple_spinner_item ,User.possibleGender);
         adapterGenderSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         genderSpinner.setAdapter(adapterGenderSpinner);
 
-        ArrayAdapter<String> adapterAgeSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item ,User.possibleAges);
+        ArrayAdapter<String> adapterAgeSpinner =
+                new ArrayAdapter<>(this,
+                                    android.R.layout.simple_spinner_item ,User.possibleAges);
         adapterAgeSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ageSpinner.setAdapter(adapterAgeSpinner);
 
@@ -193,8 +191,8 @@ public class LoginPage extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                parents = new ArrayList<String>();
-                list = new ArrayList<Shelter>();
+                parents = new ArrayList<>();
+                list = new ArrayList<>();
                 for(DataSnapshot dataSnapshot1 :dataSnapshot.getChildren()){
                     parents.add(dataSnapshot1.getKey());
                     Shelter value = dataSnapshot1.getValue(Shelter.class);

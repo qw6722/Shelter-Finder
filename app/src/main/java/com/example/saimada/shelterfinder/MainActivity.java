@@ -32,26 +32,26 @@ public class MainActivity extends AppCompatActivity {
     Button b1; //submit button for authentication
     private FirebaseAuth mAuth; //Firebase connection
     Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         //getActionBar().setDisplayHomeAsUpEnabled(true);
         mAuth = FirebaseAuth.getInstance();
         
-        b1 = (Button)findViewById(R.id.button);
-        ed1 = (EditText)findViewById(R.id.editText);
-        ed2 = (EditText)findViewById(R.id.editText2);
+        b1 = findViewById(R.id.button);
+        ed1 = findViewById(R.id.editText);
+        ed2 = findViewById(R.id.editText2);
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 signIn(ed1.getText().toString(),ed2.getText().toString());
             }
-
         });
     }
 

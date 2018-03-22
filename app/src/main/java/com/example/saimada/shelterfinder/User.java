@@ -1,5 +1,5 @@
 package com.example.saimada.shelterfinder;
-import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.List;
 /**
@@ -8,13 +8,14 @@ import java.util.List;
 
 public class User {
     public static List<String> possibleGender = Arrays.asList("Anyone","Male", "Female");
-    public static List<String> possibleAges = Arrays.asList("Anyone", "YoungAdults", "Children", "FamilyAndNewborn");
+    public static List<String> possibleAges = Arrays.asList("Anyone", "YoungAdults",
+                                                                "Children", "FamilyAndNewborn");
 
 
     private String username;
     private String password;
     private boolean isAdmin;
-
+    private boolean checkedIn;
 
     /**
      * Creates user object.
@@ -72,5 +73,21 @@ public class User {
      */
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    /**
+     * Sees if the user is currently check in to a Shelter or not
+     * @return the check in status of the user
+     */
+    public boolean isCheckedIn() {
+        return checkedIn;
+    }
+
+    /**
+     * Set to true if the user is currently check in anywhere
+     * @param checkedIn true if checked in, false otherwise
+     */
+    public void setCheckedIn(boolean checkedIn) {
+        this.checkedIn = checkedIn;
     }
 }
