@@ -7,20 +7,20 @@ import android.widget.TextView;
 
 public class SingleShelterView extends AppCompatActivity {
 
-
     TextView name;
     TextView capacity;
     TextView restrictions;
     TextView address;
     TextView phone;
     Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_shelter_view);
         Bundle extras = getIntent().getExtras();
 
-        toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
