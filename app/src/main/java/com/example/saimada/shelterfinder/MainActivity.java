@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     Button b1; //submit button for authentication
     private FirebaseAuth mAuth; //Firebase connection
     Toolbar toolbar;
+    public static FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             updateUI(currentUser);
         }
@@ -94,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     // Sign in success, update UI with the signed-in user's information
                     FirebaseUser user = mAuth.getCurrentUser();
+                    currentUser = user;
                     updateUI(user);
                 } else {
                     // If sign in fails, display a message to the user.

@@ -67,7 +67,7 @@ public class Register extends AppCompatActivity {
                                     String userID = user.getUid();
                                     if (userType.isChecked()) {
                                         if (ed4.getText().toString().equals(adminPassword)) {
-                                            User userAdding = new User(ed1.getText().toString(), ed2.getText().toString(), true);
+                                            User userAdding = new User(ed1.getText().toString(), ed2.getText().toString(), true, false);
                                             dbRef.child("users").child(userID).setValue(userAdding);
                                         }
                                         else {
@@ -75,9 +75,8 @@ public class Register extends AppCompatActivity {
                                         }
                                     }
                                     else {
-                                        User userAdding = new User(ed1.getText().toString(), ed2.getText().toString(), false);
+                                        User userAdding = new User(ed1.getText().toString(), ed2.getText().toString(), false, false);
                                         dbRef.child("users").child(userID).setValue(userAdding);
-
                                     }
                                 }
                             }

@@ -18,6 +18,7 @@ public class User {
     private String username;
     private String password;
     private boolean isAdmin;
+    private boolean checkedin;
 
     /**
      * Creates user object.
@@ -25,11 +26,13 @@ public class User {
      * @param password user's password
      * @param isAdmin user's admins status
      */
-    public User(String username, String password, boolean isAdmin){
-
+    public User(String username, String password, boolean isAdmin, boolean checkedin){
         this.username = username;
         this.password = password;
         this.isAdmin = isAdmin;
+    }
+
+    private User() {
 
     }
 
@@ -75,6 +78,17 @@ public class User {
      */
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    /**
+     * @return if the user is checkedin to any shelter
+     */
+    public boolean isCheckedin() {
+        return checkedin;
+    }
+
+    public void setCheckedin(boolean checkedin) {
+        this.checkedin = checkedin;
     }
 
     @Override

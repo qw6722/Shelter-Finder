@@ -85,13 +85,16 @@ public class LoginPage extends AppCompatActivity {
                 // Filtering for age
                 if (!_age.equals("Anyone")) {
                     for (int i = 0; i < filteredList.size(); i++) {
-                        if (_age.equals("Children") && !filteredList.get(i).getRestrictions().toLowerCase().contains("children")) {
+                        if (_age.equals("Children") && !filteredList.get(i).getRestrictions()
+                                        .toLowerCase().contains("children")) {
                             filteredList.remove(i);
                             i--;
-                        } else if (_age.equals("FamilyAndNewborn") && !filteredList.get(i).getRestrictions().toLowerCase().contains("newborn")) {
+                        } else if (_age.equals("FamilyAndNewborn") && !filteredList.get(i)
+                                        .getRestrictions().toLowerCase().contains("newborn")) {
                             filteredList.remove(i);
                             i--;
-                        } else if (_age.equals("YoungAdults") && !filteredList.get(i).getRestrictions().toLowerCase().contains("young adults")) {
+                        } else if (_age.equals("YoungAdults") && !filteredList.get(i)
+                                        .getRestrictions().toLowerCase().contains("young adults")) {
                             filteredList.remove(i);
                             i--;
                         }
@@ -100,7 +103,8 @@ public class LoginPage extends AppCompatActivity {
                 //Filtering for gender
                 if (!_gender.equals("Anyone")) {
                     for (int i = 0; i < filteredList.size(); i++) {
-                        String restrictions = filteredList.get(i).getRestrictions().replace("/","").toLowerCase();
+                        String restrictions = filteredList.get(i).getRestrictions()
+                                                .replace("/","").toLowerCase();
                         if (_gender.equals("Male") && (!restrictions.contains("men")
                                 || restrictions.contains("women"))) {
                             filteredList.remove(i);

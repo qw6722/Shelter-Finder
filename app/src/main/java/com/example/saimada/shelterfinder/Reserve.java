@@ -4,6 +4,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import android.os.Bundle;
@@ -27,9 +28,13 @@ public class Reserve extends AppCompatActivity{
     private TextView shelterCapacity;
     private Button reserve;
     private Button cancel;
+    private Button checkOut;
     private Toolbar toolbar;
     private DatabaseReference ref;
     private String _numOfPeople;
+
+    // Ya I know this code design sucks but Java 7 also sucks
+    private static boolean ret;
 
 
     @Override
@@ -42,6 +47,9 @@ public class Reserve extends AppCompatActivity{
         reserve =  findViewById(R.id.reserve);
         shelterCapacity = findViewById(R.id.shelterCapacity);
         cancel = findViewById(R.id.cancel);
+        checkOut = findViewById(R.id.checkOut);
+
+
 
         toolbar = findViewById(R.id.toolbarReserve);
         setSupportActionBar(toolbar);
@@ -56,7 +64,7 @@ public class Reserve extends AppCompatActivity{
         nameOfShelter.setKeyListener(null);
         nameOfShelter.setText(name);
         shelterCapacity.setKeyListener(null);
-        shelterCapacity.setText("Capacity: "+cap);
+        shelterCapacity.setText("Capacity: " + cap);
 
         _numOfPeople = "";
 
@@ -84,14 +92,22 @@ public class Reserve extends AppCompatActivity{
                 _numOfPeople =  numOfBeds.getText().toString();
                 int _numIntOfPeople =  Integer.parseInt(_numOfPeople);
                 //get the int value of the shelter capacity
-                if (_numIntOfPeople < 0 || _numIntOfPeople > getShelterCapacity()) {
-                    Toast.makeText(Reserve.this,
-                            "Number invalid. It must be positive and less than the shelter capacity.",
-                            Toast.LENGTH_SHORT).show();
-                    _numIntOfPeople = 0;
+                boolean notCheckedIn = notCheckedIn();
+                if (notCheckedIn) {
+                    if ((_numIntOfPeople < 0 || _numIntOfPeople > getShelterCapacity())) {
+                        Toast.makeText(Reserve.this,
+                                "Number invalid. It must be positive and less than the shelter capacity.",
+                                Toast.LENGTH_SHORT).show();
+                        _numIntOfPeople = 0;
+                    } else {
+                        String cap = "Blah";
+                        setShelterCapacity(_numIntOfPeople, cap);
+                    }
                 } else {
-                    String cap = "Blah";
-                    setShelterCapacity(_numIntOfPeople, cap);
+                    Toast t = Toast.makeText(getApplicationContext(), "Cannot check into more "
+                            + "than one shelter. Check out of the previous one first",
+                            Toast.LENGTH_SHORT);
+                    t.show();
                 }
             }
         });
@@ -102,6 +118,35 @@ public class Reserve extends AppCompatActivity{
                 String cap = "Blah";
                 int _numIntOfPeople = Integer.parseInt(numOfBeds.getText().toString());
                 addShelterCapacity(_numIntOfPeople, cap);
+            }
+        });
+
+        checkOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkOut();
+            }
+        });
+    }
+
+    private void checkOut() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users");
+        Query query = reference.orderByChild("username").equalTo(MainActivity.currentUser.getEmail());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot snap: dataSnapshot.getChildren()) {
+                        if (snap.getKey().equals("checkedin")) {
+                            snap.getRef().setValue("false");
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
     }
@@ -166,5 +211,30 @@ public class Reserve extends AppCompatActivity{
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    private boolean notCheckedIn() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users");
+        Query query = reference.orderByChild("username").equalTo(MainActivity.currentUser.getEmail());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot snap: dataSnapshot.getChildren()) {
+                        if (snap.getKey().equals("checkedin")) {
+                            String s = snap.getValue(String.class);
+                            Reserve.ret = Boolean.parseBoolean(s);
+                            snap.getRef().setValue("true");
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        return !ret;
     }
 }

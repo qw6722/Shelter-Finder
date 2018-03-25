@@ -10,31 +10,35 @@ import java.util.Objects;
  */
 public class Shelter {
 
-    private String address;
-    private String capacity;
-    private String initialCapacity;
-    private double latitude;
-    private double longitude;
-    private String phoneNumber;
-    private String restrictions;
-    private String shelterName;
-    private String specialNotes;
-    private String uniqueKey;
+    private String Address;
+    private String Capacity;
+    private String InitialCapacity;
+    private double Latitude;
+    private double Longitude;
+    private String PhoneNumber;
+    private String Restrictions;
+    private String ShelterName;
+    private String SpecialNotes;
+    private String UniqueKey;
+
+    private Shelter() {
+
+    }
 
     private Shelter(String address, String capacity, double latitude,
                    double longitude, String phoneNumber, String restrictions,
                    String shelterName, String specialNotes, String uniqueKey,
                    String intCapacity) {
-        this.address = address;
-        this.capacity = capacity;
-        this.initialCapacity = intCapacity;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.phoneNumber = phoneNumber;
-        this.restrictions = restrictions;
-        this.shelterName = shelterName;
-        this.specialNotes = specialNotes;
-        this.uniqueKey = uniqueKey;
+        this.Address = address;
+        this.Capacity = capacity;
+        this.InitialCapacity = intCapacity;
+        this.Latitude = latitude;
+        this.Longitude = longitude;
+        this.PhoneNumber = phoneNumber;
+        this.Restrictions = restrictions;
+        this.ShelterName = shelterName;
+        this.SpecialNotes = specialNotes;
+        this.UniqueKey = uniqueKey;
     }
 
     public interface Builder {
@@ -142,99 +146,99 @@ public class Shelter {
     }
 
     public String getAddress() {
-        return address;
+        return Address;
     }
 
     public void setAddress(String address) {
-        this.address = address;
+        this.Address = address;
     }
 
     public String getCapacity() {
-        return capacity;
+        return Capacity;
     }
 
     public void setCapacity(String capacity) {
-        this.capacity = capacity;
+        this.Capacity = capacity;
     }
 
     public double getLatitude() {
-        return latitude;
+        return Latitude;
     }
 
     public void setLatitude(double latitude) {
-        this.latitude = latitude;
+        this.Latitude = latitude;
     }
 
     public double getLongitude() {
-        return longitude;
+        return Longitude;
     }
 
     public void setLongitude(double longitude) {
-        this.longitude = longitude;
+        this.Longitude = longitude;
     }
 
     public String getPhoneNumber() {
-        return phoneNumber;
+        return PhoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        this.PhoneNumber = phoneNumber;
     }
 
     public String getRestrictions() {
-        return restrictions;
+        return Restrictions;
     }
 
     public void setRestrictions(String restrictions) {
-        this.restrictions = restrictions;
+        this.Restrictions = restrictions;
     }
 
     public String getShelterName() {
-        return shelterName;
+        return ShelterName;
     }
 
     public void setShelterName(String shelterName) {
-        this.shelterName = shelterName;
+        this.ShelterName = shelterName;
     }
 
     public String getSpecialNotes() {
-        return specialNotes;
+        return SpecialNotes;
     }
 
     public void setSpecialNotes(String specialNotes) {
-        this.specialNotes = specialNotes;
+        this.SpecialNotes = specialNotes;
     }
 
     public String getUniqueKey() {
-        return uniqueKey;
+        return UniqueKey;
     }
 
     public void setUniqueKey(String uniqueKey) {
-        this.uniqueKey = uniqueKey;
+        this.UniqueKey = uniqueKey;
     }
 
     public String getIntCapacity() {
-        return initialCapacity;
+        return InitialCapacity;
     }
 
     public void setIntCapacity(String intCapNew) {
-        this.initialCapacity = intCapNew;
+        this.InitialCapacity = intCapNew;
     }
 
     @Override
     public String toString() {
         return String.format("Address %s%n Shelter Name %s",
-                address, shelterName);
+                Address, ShelterName);
     }
 
     @Override
     public boolean equals(Object other) {
         return this == other || other instanceof Shelter
-                && uniqueKey.equals(((Shelter) other).uniqueKey);
+                && UniqueKey.equals(((Shelter) other).UniqueKey);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uniqueKey);
+        return Objects.hash(UniqueKey);
     }
 }
