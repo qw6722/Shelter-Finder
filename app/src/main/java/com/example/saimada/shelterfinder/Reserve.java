@@ -1,10 +1,10 @@
 package com.example.saimada.shelterfinder;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import android.os.Bundle;
@@ -19,6 +19,7 @@ import android.widget.Toast;
 /**
  * Represents a Reservation Page
  * @author arnabdey
+ * @author Shishir
  * @since 3/11/18
  */
 public class Reserve extends AppCompatActivity{
@@ -35,6 +36,7 @@ public class Reserve extends AppCompatActivity{
 
     // Ya I know this code design sucks but Java 7 also sucks
     private static boolean ret;
+    private int reservations;
 
 
     @Override
@@ -67,24 +69,6 @@ public class Reserve extends AppCompatActivity{
         shelterCapacity.setText("Capacity: " + cap);
 
         _numOfPeople = "";
-
-        /*ref = FirebaseDatabase.getInstance().getReference().child("Data");
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                list = new ArrayList<Shelter>();
-                for(DataSnapshot dataSnapshot1 :dataSnapshot.getChildren()){
-
-                    Shelter value = dataSnapshot1.getValue(Shelter.class);
-                    list.add(value);
-
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });*/
 
         reserve.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,24 +115,24 @@ public class Reserve extends AppCompatActivity{
 
     private void checkOut() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users");
-        Query query = reference.orderByChild("username").equalTo(MainActivity.currentUser.getEmail());
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("checkedin")
+                .setValue("false");
+
+        Bundle extras = getIntent().getExtras();
+        String name = extras.getString("shelter_name");
+        String capacity = extras.getString("shelter_capacity");
+        final int total = Integer.parseInt(capacity) + reservations;
+        ref.child(findParent()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot snap: dataSnapshot.getChildren()) {
-                        if (snap.getKey().equals("checkedin")) {
-                            snap.getRef().setValue("false");
-                        }
-                    }
-                }
+                dataSnapshot.getRef().child("Capacity").setValue("" + total);
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
+
+        shelterCapacity.setText("Capacity: "+ total);
     }
 
     //create a method that gets the data from Firebase and returns the shelter's reservation int
@@ -160,6 +144,7 @@ public class Reserve extends AppCompatActivity{
     }
 
     public void setShelterCapacity(int reservations, String cap) {
+        this.reservations = reservations;
         Bundle extras = getIntent().getExtras();
         String name = extras.getString("shelter_name");
         String capacity = extras.getString("shelter_capacity");
@@ -213,21 +198,14 @@ public class Reserve extends AppCompatActivity{
         return true;
     }
 
-    private boolean notCheckedIn() {
+    private boolean isCheckedIn() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users");
-        Query query = reference.orderByChild("username").equalTo(MainActivity.currentUser.getEmail());
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference user = reference.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        user.child("checkedin").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot snap: dataSnapshot.getChildren()) {
-                        if (snap.getKey().equals("checkedin")) {
-                            String s = snap.getValue(String.class);
-                            Reserve.ret = Boolean.parseBoolean(s);
-                            snap.getRef().setValue("true");
-                        }
-                    }
-                }
+                String s = dataSnapshot.getValue(String.class);
+                Reserve.ret = Boolean.parseBoolean(s);
             }
 
             @Override
@@ -235,6 +213,14 @@ public class Reserve extends AppCompatActivity{
 
             }
         });
+        return ret;
+    }
+
+    private boolean notCheckedIn() {
+        boolean ret = isCheckedIn();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users");
+        DatabaseReference user = reference.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        user.child("checkedin").setValue("true");
         return !ret;
     }
 }
