@@ -52,7 +52,6 @@ public class Reserve extends AppCompatActivity{
         checkOut = findViewById(R.id.checkOut);
 
 
-
         toolbar = findViewById(R.id.toolbarReserve);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -74,20 +73,25 @@ public class Reserve extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 _numOfPeople =  numOfBeds.getText().toString();
-                int _numIntOfPeople =  Integer.parseInt(_numOfPeople);
+                int _numIntOfPeople;
+                try {
+                    _numIntOfPeople = Integer.parseInt(_numOfPeople);
+                } catch (NumberFormatException e) {
+                    _numIntOfPeople = 0;
+                }
                 //get the int value of the shelter capacity
                 boolean notCheckedIn = notCheckedIn();
-                if (notCheckedIn) {
+                if (_numIntOfPeople > 0 && notCheckedIn) {
                     if ((_numIntOfPeople < 0 || _numIntOfPeople > getShelterCapacity())) {
                         Toast.makeText(Reserve.this,
-                                "Number invalid. It must be positive and less than the shelter capacity.",
+                                "Number invalid. It must be positive and less than the "
+                                        + "shelter capacity.",
                                 Toast.LENGTH_SHORT).show();
-                        _numIntOfPeople = 0;
                     } else {
                         String cap = "Blah";
                         setShelterCapacity(_numIntOfPeople, cap);
                     }
-                } else {
+                } else if (!notCheckedIn) {
                     Toast t = Toast.makeText(getApplicationContext(), "Cannot check into more "
                             + "than one shelter. Check out of the previous one first",
                             Toast.LENGTH_SHORT);
@@ -100,7 +104,12 @@ public class Reserve extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 String cap = "Blah";
-                int _numIntOfPeople = Integer.parseInt(numOfBeds.getText().toString());
+                int _numIntOfPeople;
+                try {
+                    _numIntOfPeople = Integer.parseInt(numOfBeds.getText().toString());
+                } catch (NumberFormatException e) {
+                    _numIntOfPeople = 0;
+                }
                 addShelterCapacity(_numIntOfPeople, cap);
             }
         });
@@ -122,10 +131,14 @@ public class Reserve extends AppCompatActivity{
         String name = extras.getString("shelter_name");
         String capacity = extras.getString("shelter_capacity");
         final int total = Integer.parseInt(capacity) + reservations;
+        ref = FirebaseDatabase.getInstance().getReference().child("Data");
         ref.child(findParent()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                dataSnapshot.getRef().child("Capacity").setValue("" + total);
+                dataSnapshot
+                        .getRef()
+                        .child("Capacity")
+                        .setValue(String.valueOf(total));
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
