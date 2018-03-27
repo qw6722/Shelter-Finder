@@ -36,7 +36,6 @@ public class LoginPage extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<Shelter> list = new ArrayList<>();
     private List<String> parents = new ArrayList<>();
-    private List<Shelter> filteredList = new ArrayList<>();
 
     private DatabaseReference ref;
     private RecyclerView.Adapter adapter;
@@ -74,53 +73,9 @@ public class LoginPage extends AppCompatActivity {
                 _gender = genderSpinner.getSelectedItem().toString();
                 _age = ageSpinner.getSelectedItem().toString();
                 _search  = search.getQuery().toString();
-                filteredList = new ArrayList<>();
-                // Filtering for name
-                for (int i = 0;  i < list.size(); i++) {
-                    if ((list.get(i).getShelterName().toLowerCase()).contains(_search.toLowerCase()) || _search.equals("")) {
-                        filteredList.add(list.get(i));
-                    }
-                }
-
-                // Filtering for age
-                if (!_age.equals("Anyone")) {
-                    for (int i = 0; i < filteredList.size(); i++) {
-                        if (_age.equals("Children") && !filteredList.get(i).getRestrictions()
-                                        .toLowerCase().contains("children")) {
-                            filteredList.remove(i);
-                            i--;
-                        } else if (_age.equals("FamilyAndNewborn") && !filteredList.get(i)
-                                        .getRestrictions().toLowerCase().contains("newborn")) {
-                            filteredList.remove(i);
-                            i--;
-                        } else if (_age.equals("YoungAdults") && !filteredList.get(i)
-                                        .getRestrictions().toLowerCase().contains("young adults")) {
-                            filteredList.remove(i);
-                            i--;
-                        }
-                    }
-                }
-                //Filtering for gender
-                if (!_gender.equals("Anyone")) {
-                    for (int i = 0; i < filteredList.size(); i++) {
-                        String restrictions = filteredList.get(i).getRestrictions()
-                                                .replace("/","").toLowerCase();
-                        if (_gender.equals("Male") && (!restrictions.contains("men")
-                                || restrictions.contains("women"))) {
-                            filteredList.remove(i);
-                            i--;
-                        } else if (_gender.equals("Female") && !restrictions.contains("women")) {
-                                filteredList.remove(i);
-                                i--;
-
-                        }
-                    }
-                }
-                Log.e("size ", (String.valueOf(filteredList.size())));
-                adapter = new ShelterRecyclerAdapter(filteredList,LoginPage.this);
+                adapter = new ShelterRecyclerAdapter(filter(),LoginPage.this);
                 recyclerView.setAdapter(adapter);
                 Log.e("CHECKING!!!!!!!!!!!!",_gender + " " + _age + " " + _search);
-
 
             }
         });
@@ -210,10 +165,53 @@ public class LoginPage extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+    }
 
+    private List<Shelter> filter() {
+        List<Shelter> filteredList = new ArrayList<>();
+        // Filtering for name
+        for (int i = 0;  i < list.size(); i++) {
+            if ((list.get(i).getShelterName().toLowerCase()).contains(_search.toLowerCase()) || _search.equals("")) {
+                filteredList.add(list.get(i));
+            }
+        }
 
+        // Filtering for age
+        if (!_age.equals("Anyone")) {
+            for (int i = 0; i < filteredList.size(); i++) {
+                if (_age.equals("Children") && !filteredList.get(i).getRestrictions()
+                        .toLowerCase().contains("children")) {
+                    filteredList.remove(i);
+                    i--;
+                } else if (_age.equals("FamilyAndNewborn") && !filteredList.get(i)
+                        .getRestrictions().toLowerCase().contains("newborn")) {
+                    filteredList.remove(i);
+                    i--;
+                } else if (_age.equals("YoungAdults") && !filteredList.get(i)
+                        .getRestrictions().toLowerCase().contains("young adults")) {
+                    filteredList.remove(i);
+                    i--;
+                }
+            }
+        }
+        //Filtering for gender
+        if (!_gender.equals("Anyone")) {
+            for (int i = 0; i < filteredList.size(); i++) {
+                String restrictions = filteredList.get(i).getRestrictions()
+                        .replace("/","").toLowerCase();
+                if (_gender.equals("Male") && (!restrictions.contains("men")
+                        || restrictions.contains("women"))) {
+                    filteredList.remove(i);
+                    i--;
+                } else if (_gender.equals("Female") && !restrictions.contains("women")) {
+                    filteredList.remove(i);
+                    i--;
 
-
+                }
+            }
+        }
+        Log.e("size ", (String.valueOf(filteredList.size())));
+        return filteredList;
     }
 
 
