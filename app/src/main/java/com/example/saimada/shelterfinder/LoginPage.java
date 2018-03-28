@@ -45,6 +45,7 @@ public class LoginPage extends AppCompatActivity {
     private Spinner ageSpinner;
     private Button filter;
     private Button clear;
+    private Button mapView;
     private SearchView search;
 
     //Keeping track of Spinner changes
@@ -66,6 +67,7 @@ public class LoginPage extends AppCompatActivity {
         filter = findViewById(R.id.Filter);
         clear = findViewById(R.id.Clear);
         search = findViewById(R.id.searchCriteria);
+        mapView = findViewById(R.id.displayMap);
 
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +96,14 @@ public class LoginPage extends AppCompatActivity {
                 adapter = new ShelterRecyclerAdapter(list,LoginPage.this);
                 recyclerView.setAdapter(adapter);
 
+            }
+        });
+
+        mapView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent toMapView = new Intent(LoginPage.this, MapsActivity.class);
+                startActivity(toMapView);
             }
         });
 
