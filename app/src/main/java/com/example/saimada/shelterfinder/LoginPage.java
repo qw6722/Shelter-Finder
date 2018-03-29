@@ -46,6 +46,7 @@ public class LoginPage extends AppCompatActivity {
     private Button filter;
     private Button clear;
     private Button mapView;
+    private Button blankMap;
     private SearchView search;
 
     //Keeping track of Spinner changes
@@ -68,6 +69,7 @@ public class LoginPage extends AppCompatActivity {
         clear = findViewById(R.id.Clear);
         search = findViewById(R.id.searchCriteria);
         mapView = findViewById(R.id.displayMap);
+        blankMap = findViewById(R.id.blankMap);
 
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +102,14 @@ public class LoginPage extends AppCompatActivity {
         });
 
         mapView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent toMapView = new Intent(LoginPage.this, MapsActivity.class);
+                startActivity(toMapView);
+            }
+        });
+
+        blankMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent toMapView = new Intent(LoginPage.this, MapsActivity.class);
