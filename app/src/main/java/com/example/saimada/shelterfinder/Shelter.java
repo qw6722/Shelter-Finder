@@ -13,8 +13,8 @@ public class Shelter {
     private String Address;
     private String Capacity;
     private String InitialCapacity;
-    private double Latitude;
-    private double Longitude;
+    private String Latitude;
+    private String Longitude;
     private String PhoneNumber;
     private String Restrictions;
     private String ShelterName;
@@ -25,8 +25,8 @@ public class Shelter {
 
     }
 
-    private Shelter(String address, String capacity, double latitude,
-                   double longitude, String phoneNumber, String restrictions,
+    private Shelter(String address, String capacity, String latitude,
+                   String longitude, String phoneNumber, String restrictions,
                    String shelterName, String specialNotes, String uniqueKey,
                    String intCapacity) {
         this.Address = address;
@@ -44,8 +44,8 @@ public class Shelter {
     public interface Builder {
         Builder withAddress(String address);
         Builder withCapacity(String capacity);
-        Builder atLongitude(double longitude);
-        Builder atLatitude(double latitude);
+        Builder atLongitude(String longitude);
+        Builder atLatitude(String latitude);
         Builder withPhoneNumber(String phoneNumber);
         Builder withRestrictions(String restrictions);
         Builder withName(String name);
@@ -59,7 +59,7 @@ public class Shelter {
         return new Builder() {
             private String address, uniqueKey, phoneNumber, restrictions, shelterName, specialNotes;
             private String capacity, initialCapacity;
-            private double latitude, longitude;
+            private String latitude, longitude;
             private final String BUILD_FAILURE = "Failed to construct new Shelter. Not enough "
                                                     + "information provided.";
 
@@ -76,13 +76,13 @@ public class Shelter {
             }
 
             @Override
-            public Builder atLongitude(double longitude) {
+            public Builder atLongitude(String longitude) {
                 this.longitude = longitude;
                 return this;
             }
 
             @Override
-            public Builder atLatitude(double latitude) {
+            public Builder atLatitude(String latitude) {
                 this.latitude = latitude;
                 return this;
             }
@@ -127,7 +127,7 @@ public class Shelter {
             public Shelter build() {
                 checkForNulls(address, capacity, phoneNumber, restrictions, shelterName,
                                     specialNotes, uniqueKey, initialCapacity);
-                if (latitude == 0.0 || longitude == 0.0) {
+                if (latitude.equals("0.0") || longitude.equals("0.0")) {
                     throw new IllegalStateException(BUILD_FAILURE);
                 }
                 return new Shelter(address, capacity, latitude, longitude, phoneNumber,
@@ -161,19 +161,19 @@ public class Shelter {
         this.Capacity = capacity;
     }
 
-    public double getLatitude() {
+    public String getLatitude() {
         return Latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(String latitude) {
         this.Latitude = latitude;
     }
 
-    public double getLongitude() {
+    public String getLongitude() {
         return Longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(String longitude) {
         this.Longitude = longitude;
     }
 

@@ -20,6 +20,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.SearchView;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,11 +36,11 @@ public class LoginPage extends AppCompatActivity {
 
     private Toolbar toolbar;
     private RecyclerView recyclerView;
-    private List<Shelter> list = new ArrayList<>();
+    private static List<Shelter> list = new ArrayList<>();
     private List<String> parents = new ArrayList<>();
 
     private DatabaseReference ref;
-    private RecyclerView.Adapter adapter;
+    public static RecyclerView.Adapter adapter;
     private SwipeController swipeController;
     //Used for binding and getting information
     private Spinner genderSpinner;
@@ -50,9 +52,9 @@ public class LoginPage extends AppCompatActivity {
     private SearchView search;
 
     //Keeping track of Spinner changes
-    private String _gender = "NA";
-    private String _age = "Anyone";
-    private String _search = "";
+    private static String _gender = "NA";
+    private static String _age = "Anyone";
+    private static String _search = "";
 
 
     @Override
@@ -78,9 +80,9 @@ public class LoginPage extends AppCompatActivity {
                 _age = ageSpinner.getSelectedItem().toString();
                 _search  = search.getQuery().toString();
                 adapter = new ShelterRecyclerAdapter(filter(),LoginPage.this);
+                //addSheltersToMap(filter());
                 recyclerView.setAdapter(adapter);
-                Log.e("CHECKING!!!!!!!!!!!!",_gender + " " + _age + " " + _search);
-
+                //Log.e("CHECKING!!!!!!!!!!!!",_gender + " " + _age + " " + _search);
             }
         });
 
@@ -96,6 +98,7 @@ public class LoginPage extends AppCompatActivity {
                 search.clearFocus();
                 Log.e("CHECKING!!!!!!!!! Clear",_gender + " " + _age + " " + _search);
                 adapter = new ShelterRecyclerAdapter(list,LoginPage.this);
+                MapsActivity.addSheltersToMap((ShelterRecyclerAdapter) adapter);
                 recyclerView.setAdapter(adapter);
 
             }
@@ -187,7 +190,12 @@ public class LoginPage extends AppCompatActivity {
         });
     }
 
-    private List<Shelter> filter() {
+    /**
+     * This method ueses logic to display only the shelters that are filtered for.
+     *
+     * @return List of Shelter objects that's filtered
+     */
+    public static List<Shelter> filter() {
         List<Shelter> filteredList = new ArrayList<>();
         // Filtering for name
         for (int i = 0;  i < list.size(); i++) {
@@ -234,6 +242,9 @@ public class LoginPage extends AppCompatActivity {
         return filteredList;
     }
 
+    public static List<Shelter> getList() {
+        return list;
+    }
 
     private void sendToStart() {
         Intent startIntent = new Intent(LoginPage.this, Opening.class);
@@ -264,5 +275,16 @@ public class LoginPage extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * This method adds all the Shelters in a list to the map itself.
+     *
+     * @param list is the list of spots to be added to the map
+     */
+   /* public void addSheltersToMap(List<Shelter> list) {
+        for (Shelter s: list) {
+            LatLng location = new LatLng(34.0000, -83.00);
+            MapsActivity.mMap.addMarker(new MarkerOptions().position(location).title("Tester"));
+        }
+    }*/
 
 }

@@ -42,10 +42,11 @@ public class ShelterRecyclerAdapter extends RecyclerView.Adapter<ShelterRecycler
     @Override
     public int getItemCount() {
         return list.size();
-
     }
 
-
+    public Shelter getItem(int position) {
+        return list.get(position);
+    }
 
     class MyHolder extends RecyclerView.ViewHolder{
         TextView name,address,capacity;

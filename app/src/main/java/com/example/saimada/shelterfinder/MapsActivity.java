@@ -2,6 +2,9 @@ package com.example.saimada.shelterfinder;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import java.util.List;
+import java.util.ArrayList;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -12,7 +15,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
+    public static GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +40,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+        addSheltersToMap((ShelterRecyclerAdapter) LoginPage.adapter);
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng atlanta = new LatLng(33.7490, -84.3880);
+        //mMap.addMarker(new MarkerOptions().position(atlanta).title("Marker in Atlanta"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(atlanta, 13.0f));
+    }
+
+    /**
+     * This method adds all the Shelters in a list to the map itself.
+     *
+     * @param list is the list of spots to be added to the map
+     */
+    public static void addSheltersToMap(ShelterRecyclerAdapter adapter) {
+        int size = adapter.getItemCount();
+        for (int i = 0; i < size; i++) {
+            System.out.println(("lat" + adapter.getItem(i).getLatitude()));
+            System.out.println(("long" + adapter.getItem(i).getLongitude()));
+            String lat = adapter.getItem(i).getLatitude() + "";
+            String longi = adapter.getItem(i).getLongitude() + "";
+            double intLat = Double.parseDouble(lat);
+            double intLong = Double.parseDouble(longi);
+            LatLng location = new LatLng(intLat, intLong);
+            mMap.addMarker(new MarkerOptions().position(location)
+                    .title(adapter.getItem(i).getShelterName()
+                            + " " + adapter.getItem(i).getCapacity()));
+        }
     }
 }
