@@ -16,10 +16,15 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     public static GoogleMap mMap;
+    private static boolean clear = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle extras = getIntent().getExtras();
+        if (extras.getString("type").equals("blank map")) {
+            clear = true;
+        }
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -50,21 +55,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     /**
      * This method adds all the Shelters in a list to the map itself.
      *
-     * @param list is the list of spots to be added to the map
+     * @param adapter is the list of spots to be added to the map
      */
     public static void addSheltersToMap(ShelterRecyclerAdapter adapter) {
-        int size = adapter.getItemCount();
-        for (int i = 0; i < size; i++) {
-            System.out.println(("lat" + adapter.getItem(i).getLatitude()));
-            System.out.println(("long" + adapter.getItem(i).getLongitude()));
-            String lat = adapter.getItem(i).getLatitude() + "";
-            String longi = adapter.getItem(i).getLongitude() + "";
-            double intLat = Double.parseDouble(lat);
-            double intLong = Double.parseDouble(longi);
-            LatLng location = new LatLng(intLat, intLong);
-            mMap.addMarker(new MarkerOptions().position(location)
-                    .title(adapter.getItem(i).getShelterName()
-                            + " " + adapter.getItem(i).getCapacity()));
+        if (!clear) {
+            int size = adapter.getItemCount();
+            for (int i = 0; i < size; i++) {
+                System.out.println(("lat" + adapter.getItem(i).getLatitude()));
+                System.out.println(("long" + adapter.getItem(i).getLongitude()));
+                String lat = adapter.getItem(i).getLatitude() + "";
+                String longi = adapter.getItem(i).getLongitude() + "";
+                double intLat = Double.parseDouble(lat);
+                double intLong = Double.parseDouble(longi);
+                LatLng location = new LatLng(intLat, intLong);
+                mMap.addMarker(new MarkerOptions().position(location)
+                        .title(adapter.getItem(i).getShelterName()
+                                + " " + adapter.getItem(i).getCapacity()));
+            }
+        } else {
+            Log.e("type of map", "Blank map");
         }
     }
 }
