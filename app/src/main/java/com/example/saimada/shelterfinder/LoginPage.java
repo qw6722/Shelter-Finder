@@ -73,6 +73,29 @@ public class LoginPage extends AppCompatActivity {
         mapView = findViewById(R.id.displayMap);
         blankMap = findViewById(R.id.blankMap);
 
+        ref = FirebaseDatabase.getInstance().getReference().child("Data");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                parents = new ArrayList<>();
+                list = new ArrayList<>();
+                for(DataSnapshot dataSnapshot1 :dataSnapshot.getChildren()){
+                    parents.add(dataSnapshot1.getKey());
+                    Shelter value = dataSnapshot1.getValue(Shelter.class);
+                    Log.e("shelter", value.toString());
+                    list.add(value);
+                }
+                adapter = new ShelterRecyclerAdapter(list,LoginPage.this);
+                recyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        adapter = new ShelterRecyclerAdapter(list,LoginPage.this);
+
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,7 +119,7 @@ public class LoginPage extends AppCompatActivity {
                 ageSpinner.setSelection(0);
                 search.setQuery("", false);
                 search.clearFocus();
-                Log.e("CHECKING!!!!!!!!! Clear",_gender + " " + _age + " " + _search);
+                //Log.e("CHECKING!!!!!!!!! Clear",_gender + " " + _age + " " + _search);
                 adapter = new ShelterRecyclerAdapter(list,LoginPage.this);
                 MapsActivity.addSheltersToMap((ShelterRecyclerAdapter) adapter);
                 recyclerView.setAdapter(adapter);
@@ -108,6 +131,7 @@ public class LoginPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent toMapView = new Intent(LoginPage.this, MapsActivity.class);
+                toMapView.putExtra("type","not blank");
                 startActivity(toMapView);
             }
         });
@@ -116,6 +140,7 @@ public class LoginPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent toMapView = new Intent(LoginPage.this, MapsActivity.class);
+                toMapView.putExtra("type","blank map");
                 startActivity(toMapView);
             }
         });

@@ -227,8 +227,8 @@ public class Shelter {
 
     @Override
     public String toString() {
-        return String.format("Address %s%n Shelter Name %s",
-                Address, ShelterName);
+        return String.format("Address %s%n Shelter Name %s Latitude %s, Longitude %s",
+                Address, ShelterName, Latitude, Longitude);
     }
 
     @Override

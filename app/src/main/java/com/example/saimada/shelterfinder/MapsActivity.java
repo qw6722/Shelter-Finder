@@ -24,6 +24,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Bundle extras = getIntent().getExtras();
         if (extras.getString("type").equals("blank map")) {
             clear = true;
+        } else {
+            clear = false;
         }
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -61,8 +63,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (!clear) {
             int size = adapter.getItemCount();
             for (int i = 0; i < size; i++) {
-                System.out.println(("lat" + adapter.getItem(i).getLatitude()));
-                System.out.println(("long" + adapter.getItem(i).getLongitude()));
+                Log.e("lat", adapter.getItem(i).getLatitude());
+                Log.e("long", adapter.getItem(i).getLongitude());
                 String lat = adapter.getItem(i).getLatitude() + "";
                 String longi = adapter.getItem(i).getLongitude() + "";
                 double intLat = Double.parseDouble(lat);
