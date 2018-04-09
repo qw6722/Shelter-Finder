@@ -30,6 +30,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.isAdmin = isAdmin;
+        this.checkedIn = checkedIn;
     }
 
     private User() {
