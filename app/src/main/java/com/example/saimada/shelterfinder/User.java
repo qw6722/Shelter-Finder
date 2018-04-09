@@ -15,6 +15,7 @@ public class User {
                                                                 "Children", "FamilyAndNewborn");
 
 
+
     private String username;
     private String password;
     private boolean isAdmin;
@@ -30,10 +31,10 @@ public class User {
         this.username = username;
         this.password = password;
         this.isAdmin = isAdmin;
-        this.checkedIn = checkedIn;
+        this.checkedin = checkedin;
     }
 
-    private User() {
+    public User() {
 
     }
 
@@ -84,11 +85,11 @@ public class User {
     /**
      * @return if the user is checkedin to any shelter
      */
-    public boolean isCheckedin() {
+    public boolean isCheckedIn() {
         return checkedin;
     }
 
-    public void setCheckedin(boolean checkedin) {
+    public void setCheckedIn(boolean checkedin) {
         this.checkedin = checkedin;
     }
 

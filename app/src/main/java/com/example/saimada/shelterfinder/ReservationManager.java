@@ -18,7 +18,7 @@ public class ReservationManager {
     private Map<User, Shelter> usersCheckedIn;
     private static ReservationManager instance;
 
-    private ReservationManager() {
+    public ReservationManager() {
         reservations = new HashMap<>();
         usersCheckedIn = new HashMap<>();
     }
@@ -28,6 +28,14 @@ public class ReservationManager {
             instance = new ReservationManager();
         }
         return instance;
+    }
+
+    public Map<Shelter, List<User>> getReservations() {
+        return reservations;
+    }
+
+    public Map<User, Shelter> getUsersCheckedIn() {
+        return usersCheckedIn;
     }
 
     /**

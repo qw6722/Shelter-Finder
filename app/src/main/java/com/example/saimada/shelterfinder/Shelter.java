@@ -21,7 +21,7 @@ public class Shelter {
     private String SpecialNotes;
     private String UniqueKey;
 
-    private Shelter() {
+    public Shelter() {
 
     }
 
