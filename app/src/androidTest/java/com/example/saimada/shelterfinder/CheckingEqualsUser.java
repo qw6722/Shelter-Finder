@@ -14,6 +14,7 @@ public class CheckingEqualsUser {
     User user3;
     User user4;
     User user5;
+    Shelter shelter1;
     @Before
     public void setUp() {
         user1 = new User();
@@ -40,17 +41,19 @@ public class CheckingEqualsUser {
         user4.setAdmin(false);
         user4.setCheckedIn(true);
 
-        user5 = new User("username", "paswword", false, false);
+        user5 = user1;
+
+        shelter1 = new Shelter();
     }
 
     @Test
     public void differentClasses() {
-        assertFalse(user2.equals(user5));
+        assertFalse(shelter1.equals(user1));
     }
     
     @Test
-    public void sameType() {
-        assertTrue(user1.equals(user3));
+    public void sameObject() {
+        assertTrue(user5.equals(user1));
     }
 
     @Test
@@ -60,12 +63,15 @@ public class CheckingEqualsUser {
 
     @Test
     public void notEqual() {
-        assertFalse(user1.equals(user4));
+        assertFalse(user1.equals(user2));
     }
 
     @Test
-    public void sameObject() {
-        assertTrue(user1.equals(user3));
+    public void sameUsername() {
+        assertTrue(user1.equals(user4));
     }
+
+    @Test
+    public void samePassword() { assertFalse(user2.equals(user3)); }
 
 }
