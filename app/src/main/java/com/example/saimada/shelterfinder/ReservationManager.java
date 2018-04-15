@@ -71,4 +71,13 @@ public class ReservationManager {
         reservations.get(s).remove(user);
         return true;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof ReservationManager)) {
+            return false;
+        }
+        ReservationManager that = (ReservationManager) other;
+        return usersCheckedIn.equals(that.usersCheckedIn) && reservations.equals(that.reservations);
+    }
 }
