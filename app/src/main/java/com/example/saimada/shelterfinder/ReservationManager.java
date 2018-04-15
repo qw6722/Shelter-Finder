@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * A class designed to keep track of which Shelters have which users
@@ -79,5 +80,10 @@ public class ReservationManager {
         }
         ReservationManager that = (ReservationManager) other;
         return usersCheckedIn.equals(that.usersCheckedIn) && reservations.equals(that.reservations);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(usersCheckedIn, reservations);
     }
 }
